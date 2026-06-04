@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Алия Сейткали — Юрист в Павлодаре | Кредиты, Семья, Труд</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+  <style>
+    :root{--g900:#0D2B1A;--g800:#143522;--g700:#1B4A2A;--g500:#2E6B40;--gold:#9B8550;--gold-h:#7D6840;--gold-l:#C4AD7A;--cr200:#F4EFE6;--cr300:#EDE7DA;--cr100:#FAF8F4;--fg1:#111111;--fg2:#444444;--fg3:#777777;--bd:#E2DBD0;--sec-py:96px;--card-r:20px;--heading-font:'Playfair Display';--body-sz:16px;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cr200);color:var(--fg1);font-size:var(--body-sz,16px);}
+    .serif{font-family:var(--heading-font,'Playfair Display'),Georgia,serif;}
+
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-22px)}}
+    @keyframes floatS{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-14px) rotate(6deg)}}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(44px)}to{opacity:1;transform:none}}
+    @keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.95)}}
+    @keyframes slideDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+
+    .float{animation:float 5s ease-in-out infinite;}
+    .floatS{animation:floatS 8s ease-in-out infinite;}
+    .hi0{animation:fadeUp .85s .0s cubic-bezier(.22,.68,0,1.1) forwards;}
+    .hi1{animation:fadeUp .85s .12s cubic-bezier(.22,.68,0,1.1) forwards;opacity:0;}
+    .hi2{animation:fadeUp .85s .24s cubic-bezier(.22,.68,0,1.1) forwards;opacity:0;}
+    .hi3{animation:fadeUp .85s .36s cubic-bezier(.22,.68,0,1.1) forwards;opacity:0;}
+    .hi4{animation:fadeUp .85s .50s cubic-bezier(.22,.68,0,1.1) forwards;opacity:0;}
+    .hi5{animation:fadeUp .85s .62s cubic-bezier(.22,.68,0,1.1) forwards;opacity:0;}
+
+    .rev{opacity:0;transform:translateY(36px);transition:opacity .75s cubic-bezier(.22,.68,0,1),transform .75s cubic-bezier(.22,.68,0,1);}
+    .rev.vis{opacity:1;transform:none;}
+    .rev.td1{transition-delay:.07s;}.rev.td2{transition-delay:.17s;}.rev.td3{transition-delay:.27s;}
+    .rev.td4{transition-delay:.37s;}.rev.td5{transition-delay:.47s;}
+
+    .gtext{background:linear-gradient(130deg,var(--gold) 0%,var(--gold-l) 48%,var(--gold) 95%);background-size:200% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 3.5s linear infinite;}
+
+    .btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;font-family:'DM Sans',sans-serif;font-weight:500;font-size:14px;cursor:pointer;text-decoration:none;border:none;transition:all .22s ease;white-space:nowrap;}
+    .btn:hover{transform:translateY(-2px);}
+    .btn-g{background:var(--gold);color:#fff;padding:14px 28px;}
+    .btn-g:hover{background:var(--gold-h);box-shadow:0 8px 28px rgba(155,133,80,.38);}
+    .btn-o{background:transparent;color:var(--fg1);border:1.5px solid var(--fg1);padding:13px 24px;}
+    .btn-o:hover{background:var(--cr300);}
+    .btn-ghost{background:transparent;color:rgba(255,255,255,.9);border:1.5px solid rgba(255,255,255,.3);padding:13px 24px;}
+    .btn-ghost:hover{background:rgba(255,255,255,.12);}
+
+    .navbar{background:rgba(244,239,230,.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(226,219,208,.55);border-radius:999px;transition:background .3s,box-shadow .3s;}
+    .navbar.sc{background:rgba(244,239,230,.97);box-shadow:0 4px 28px rgba(0,0,0,.09);}
+
+    .card{background:#fff;border-radius:var(--card-r,20px);border:1px solid var(--bd);transition:transform .25s ease,box-shadow .25s ease;}
+    .card:hover{transform:translateY(-5px);box-shadow:0 18px 52px rgba(0,0,0,.1);}
+
+    .svc-img{overflow:hidden;height:210px;border-radius:12px;}
+    .svc-img img{width:100%;height:100%;object-fit:cover;transition:transform .45s ease;}
+    .card:hover .svc-img img{transform:scale(1.06);}
+
+    .faq-body{max-height:0;overflow:hidden;transition:max-height .42s cubic-bezier(0,.98,.2,1);}
+    .faq-body.open{max-height:320px;}
+
+    .orb{border-radius:50%;filter:blur(72px);position:absolute;pointer-events:none;}
+
+    /* RESPONSIVE GRIDS */
+    .g-hero{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;}
+    .g-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+    .g-4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+    .g-6{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;align-items:center;}
+    .g-footer{display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:48px;}
+
+    @media(max-width:960px){
+      .g-hero{grid-template-columns:1fr;}
+      .g-3{grid-template-columns:1fr;}
+      .g-4{grid-template-columns:repeat(2,1fr);}
+      .g-6{grid-template-columns:repeat(3,1fr);}
+      .g-footer{grid-template-columns:repeat(2,1fr);gap:32px;}
+      .hero-photo-wrap{width:300px!important;height:420px!important;}
+    }
+    @media(max-width:540px){
+      .g-4{grid-template-columns:repeat(2,1fr);}
+      .g-6{grid-template-columns:repeat(2,1fr);}
+      .g-footer{grid-template-columns:1fr;gap:28px;}
+      .hero-photo-wrap{width:260px!important;height:360px!important;}
+      .cta-btns{flex-direction:column;align-items:stretch;}
+      .cta-btns .btn{justify-content:center;}
+    }
+
+    .md-hide{display:flex!important;}
+    .md-show{display:none!important;}
+    @media(max-width:760px){
+      .md-hide{display:none!important;}
+      .md-show{display:flex!important;}
+    }
+
+    .wa{position:fixed;bottom:28px;right:28px;z-index:90;width:54px;height:54px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;font-size:24px;color:white;box-shadow:0 4px 20px rgba(37,211,102,.4);cursor:pointer;text-decoration:none;transition:transform .2s,box-shadow .2s;}
+    .wa:hover{transform:scale(1.1);box-shadow:0 8px 32px rgba(37,211,102,.5);}
+    .mob-menu{animation:slideDown .22s ease forwards;}
+    ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--cr200);}::-webkit-scrollbar-thumb{background:var(--gold-l);border-radius:3px;}
+    [data-shadows="0"] .card:hover{transform:none!important;box-shadow:none!important;}
+    [data-anim="0"] .rev{opacity:1!important;transform:none!important;transition:none!important;}
+    [data-anim="0"] .hi0,[data-anim="0"] .hi1,[data-anim="0"] .hi2,[data-anim="0"] .hi3,[data-anim="0"] .hi4,[data-anim="0"] .hi5{animation:none!important;opacity:1!important;}
+    [data-anim="0"] .float,[data-anim="0"] .floatS{animation:none!important;}
+    [data-anim-speed="fast"] .rev{transition-duration:.3s!important;}
+    [data-anim-speed="slow"] .rev{transition-duration:1.5s!important;}
+    [data-anim-speed="fast"] .hi0,[data-anim-speed="fast"] .hi1,[data-anim-speed="fast"] .hi2,[data-anim-speed="fast"] .hi3,[data-anim-speed="fast"] .hi4,[data-anim-speed="fast"] .hi5{animation-duration:.4s!important;}
+    [data-anim-speed="slow"] .hi0,[data-anim-speed="slow"] .hi1,[data-anim-speed="slow"] .hi2,[data-anim-speed="slow"] .hi3,[data-anim-speed="slow"] .hi4,[data-anim-speed="slow"] .hi5{animation-duration:1.8s!important;}
+  </style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const {useState, useEffect, useRef} = React;
+
+function useRev(thr=0.12){
+  const ref=useRef(null); const [vis,setVis]=useState(false);
+  useEffect(()=>{
+    const el=ref.current; if(!el) return;
+    const obs=new IntersectionObserver(([e])=>{if(e.isIntersecting){setVis(true);obs.disconnect();}},{threshold:thr});
+    obs.observe(el); return ()=>obs.disconnect();
+  },[]);
+  return [ref,vis];
+}
+
+const Badge=({c})=>(
+  <span style={{display:'inline-block',padding:'6px 16px',borderRadius:'999px',fontSize:'12px',fontWeight:600,letterSpacing:'.07em',textTransform:'uppercase',color:'var(--gold)',border:'1px solid rgba(155,133,80,.3)',background:'rgba(155,133,80,.05)',marginBottom:'16px'}}>{c}</span>
+);
+
+/* NAV */
+function Nav(){
+  const [sc,setSc]=useState(false); const [mo,setMo]=useState(false);
+  useEffect(()=>{
+    const fn=()=>setSc(window.scrollY>60);
+    window.addEventListener('scroll',fn,{passive:true}); return ()=>window.removeEventListener('scroll',fn);
+  },[]);
+  const lnk=[['Услуги','#services'],['О юристе','#about'],['Отзывы','#reviews'],['FAQ','#faq']];
+  return(
+    <nav style={{position:'fixed',top:0,left:0,right:0,zIndex:50,display:'flex',justifyContent:'center',padding:'14px 16px 0'}}>
+      <div className={`navbar ${sc?'sc':''}`} style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'10px 22px',width:'100%',maxWidth:'1040px'}}>
+        <a href="#" className="serif" style={{fontWeight:700,color:'var(--g700)',fontSize:'18px',textDecoration:'none'}}>Алия Сейткали</a>
+        <div className="md-hide" style={{alignItems:'center',gap:'24px'}}>
+          {lnk.map(([l,h])=>(
+            <a key={l} href={h} style={{fontSize:'14px',fontWeight:500,color:'var(--fg2)',textDecoration:'none',transition:'color .2s'}}
+              onMouseEnter={e=>e.target.style.color='var(--g700)'} onMouseLeave={e=>e.target.style.color='var(--fg2)'}>{l}</a>
+          ))}
+        </div>
+        <a href="tel:+77066060600" className="btn btn-g md-hide" style={{padding:'10px 20px',fontSize:'13px'}}>Связаться ↗</a>
+        <button className="md-show" onClick={()=>setMo(!mo)} style={{background:'none',border:'none',cursor:'pointer',padding:'4px',flexDirection:'column',gap:'5px'}}>
+          {[0,1,2].map(i=>(
+            <span key={i} style={{display:'block',width:'22px',height:'2px',background:'var(--fg1)',transition:'all .25s',
+              opacity:i===1&&mo?0:1,
+              transform:i===0&&mo?'rotate(45deg) translateY(7px)':i===2&&mo?'rotate(-45deg) translateY(-7px)':''}}></span>
+          ))}
+        </button>
+      </div>
+      {mo&&(
+        <div className="mob-menu" style={{position:'absolute',top:'100%',left:'12px',right:'12px',background:'rgba(244,239,230,.98)',border:'1px solid var(--bd)',borderRadius:'20px',padding:'16px',boxShadow:'0 12px 40px rgba(0,0,0,.12)',marginTop:'8px'}}>
+          {lnk.map(([l,h])=>(
+            <a key={l} href={h} onClick={()=>setMo(false)} style={{display:'block',padding:'13px 8px',fontSize:'15px',fontWeight:500,color:'var(--fg1)',textDecoration:'none',borderBottom:'1px solid var(--bd)'}}>{l}</a>
+          ))}
+          <a href="tel:+77066060600" className="btn btn-g" style={{marginTop:'12px',width:'100%',justifyContent:'center'}}>Связаться с юристом ↗</a>
+        </div>
+      )}
+    </nav>
+  );
+}
+
+/* HERO */
+function Hero({heroLine1, ctaText, showOrbs, showBadges, doParallax}){
+  const [py,setPy]=useState(0);
+  useEffect(()=>{
+    const fn=()=>setPy(doParallax ? window.scrollY*.28 : 0);
+    window.addEventListener('scroll',fn,{passive:true}); return ()=>window.removeEventListener('scroll',fn);
+  },[doParallax]);
+  const stats=[{n:'8 лет',l:'опыт работы'},{n:'340+',l:'выигранных дел'},{n:'92%',l:'успешных решений'},{n:'600+',l:'довольных клиентов'}];
+  return(
+    <section style={{position:'relative',minHeight:'100vh',display:'flex',flexDirection:'column',justifyContent:'center',overflow:'hidden',paddingTop:'104px',paddingBottom:'60px',background:'linear-gradient(140deg,#FAF8F4 0%,var(--cr200) 45%,var(--cr300) 100%)'}}>
+      <div style={{position:'absolute',inset:0,opacity:.034,pointerEvents:'none',transform:`translateY(${py}px)`}}>
+        <svg width="100%" height="120%"><defs><pattern id="gr" width="56" height="56" patternUnits="userSpaceOnUse"><path d="M56 0L0 0 0 56" fill="none" stroke="#1B4A2A" strokeWidth="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#gr)"/></svg>
+      </div>
+      {showOrbs && <>
+        <div className="orb float" style={{width:'460px',height:'460px',background:'var(--g500)',top:'-110px',right:'-130px',opacity:.12}}></div>
+        <div className="orb float" style={{width:'300px',height:'300px',background:'var(--gold)',bottom:'30px',left:'-90px',opacity:.12,animationDelay:'2s'}}></div>
+        <div className="orb floatS" style={{width:'180px',height:'180px',background:'var(--gold-l)',top:'38%',right:'27%',opacity:.15,animationDelay:'4s'}}></div>
+      </>}
+
+      <div style={{position:'relative',maxWidth:'1120px',margin:'0 auto',padding:'0 32px',width:'100%'}}>
+        <div className="g-hero">
+          <div>
+            <div className="hi0" style={{display:'inline-flex',alignItems:'center',gap:'8px',padding:'7px 16px',borderRadius:'999px',background:'rgba(155,133,80,.08)',border:'1px solid rgba(155,133,80,.22)',marginBottom:'22px'}}>
+              <span style={{width:'7px',height:'7px',borderRadius:'50%',background:'var(--gold)',display:'inline-block',animation:'pulse 1.8s ease-in-out infinite'}}></span>
+              <span style={{fontSize:'12px',fontWeight:600,color:'var(--gold)',letterSpacing:'.07em',textTransform:'uppercase'}}>Павлодар · Консультация бесплатно</span>
+            </div>
+            <h1 className="hi1 serif" style={{fontSize:'clamp(40px,5vw,64px)',fontWeight:700,lineHeight:1.1,color:'var(--g900)',marginBottom:'18px',letterSpacing:'-.02em'}}>
+              {heroLine1}<br/><span className="gtext">юрист</span> рядом
+            </h1>
+            <p className="hi2" style={{fontSize:'17px',color:'var(--fg2)',lineHeight:1.65,marginBottom:'30px',maxWidth:'460px',textWrap:'pretty'}}>
+              Помогу разобраться с кредитными долгами, семейными спорами и трудовыми конфликтами. Личный подход — каждое дело веду сам.
+            </p>
+            <div className="hi3" style={{display:'flex',flexWrap:'wrap',gap:'12px',marginBottom:'36px'}}>
+              <a href="tel:+77066060600" className="btn btn-g" style={{fontSize:'15px',padding:'15px 32px'}}>{ctaText} ↗</a>
+              <a href="#services" className="btn btn-o" style={{fontSize:'15px',padding:'14px 28px'}}>Наши услуги</a>
+            </div>
+            <div className="hi4" style={{display:'flex',alignItems:'center',gap:'16px',paddingTop:'24px',borderTop:'1px solid var(--bd)'}}>
+              <div style={{display:'flex'}}>
+                {['uploads/SmartSelect_20260604_152543_Google.jpg','uploads/SmartSelect_20260604_152529_Google.jpg','uploads/SmartSelect_20260604_152513_Google.jpg'].map((s,i)=>(
+                  <img key={i} src={s} alt="" style={{width:'36px',height:'36px',borderRadius:'50%',objectFit:'cover',objectPosition:'top',border:'2px solid var(--cr200)',marginLeft:i?'-10px':'0'}} />
+                ))}
+              </div>
+              <div>
+                <div>{'★★★★★'.split('').map((s,i)=><span key={i} style={{color:'var(--gold)',fontSize:'13px'}}>{s}</span>)}</div>
+                <p style={{fontSize:'12px',color:'var(--fg3)',marginTop:'2px'}}>Более 600 клиентов в Павлодаре</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="hi5" style={{display:'flex',justifyContent:'center',position:'relative'}}>
+            <div style={{position:'relative'}}>
+              <div style={{position:'absolute',inset:'-16px',borderRadius:'34px',border:'1px solid rgba(155,133,80,.22)'}}></div>
+              <div style={{position:'absolute',inset:'-32px',borderRadius:'42px',border:'1px solid rgba(155,133,80,.1)'}}></div>
+              <div className="hero-photo-wrap" style={{width:'320px',height:'460px',borderRadius:'28px',overflow:'hidden',background:'linear-gradient(160deg,#EDE7DA,#F4EFE6)',boxShadow:'0 28px 80px rgba(13,43,26,.18)'}}>
+                <img src="uploads/lawyer_photo-1780568895176.png" alt="Юрист Алия Сейткали Павлодар" style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'center top'}} />
+              </div>
+              {showBadges && <div className="float" style={{position:'absolute',top:'-16px',right:'-28px',background:'var(--gold)',color:'white',borderRadius:'20px',padding:'13px 18px',boxShadow:'0 8px 28px rgba(155,133,80,.42)',animationDelay:'.8s'}}>
+                <p className="serif" style={{fontSize:'28px',fontWeight:700,lineHeight:1}}>8+</p>
+                <p style={{fontSize:'11px',opacity:.85,marginTop:'2px'}}>лет опыта</p>
+              </div>}
+              {showBadges && <div className="float" style={{position:'absolute',bottom:'-16px',left:'-28px',background:'white',borderRadius:'18px',padding:'13px 16px',boxShadow:'0 8px 32px rgba(0,0,0,.1)',display:'flex',alignItems:'center',gap:'10px',maxWidth:'218px',animationDelay:'1.6s'}}>
+                <div style={{width:'38px',height:'38px',borderRadius:'50%',background:'var(--g700)',display:'flex',alignItems:'center',justifyContent:'center',color:'white',fontSize:'18px',flexShrink:0}}>✓</div>
+                <div>
+                  <p style={{fontSize:'12px',fontWeight:600,color:'var(--fg1)'}}>Первая консультация</p>
+                  <p style={{fontSize:'11px',color:'var(--gold)',fontWeight:500}}>Бесплатно</p>
+                </div>
+              </div>}
+            </div>
+          </div>
+        </div>
+
+        <div className="g-4" style={{marginTop:'60px'}}>
+          {stats.map((s,i)=>(
+            <div key={i} style={{background:'rgba(255,255,255,.72)',border:'1px solid var(--bd)',borderRadius:'16px',padding:'22px',textAlign:'center',backdropFilter:'blur(8px)'}}>
+              <p className="serif" style={{fontSize:'34px',fontWeight:700,color:'var(--g900)',lineHeight:1}}>{s.n}</p>
+              <p style={{fontSize:'13px',color:'var(--fg3)',marginTop:'5px'}}>{s.l}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* SERVICES */
+function Services(){
+  const [r,v]=useRev();
+  const svc=[
+    {title:'Кредиты и долги',desc:'Реструктуризация долга, защита от коллекторов, оспаривание кредитных договоров и снятие арестов с имущества.',img:'uploads/settlement.jpg',pts:['Реструктуризация долга','Защита от коллекторов','Оспаривание договора','Снятие ареста'],clr:'#1B4A2A'},
+    {title:'Семейное право',desc:'Развод, раздел имущества, алименты, определение места жительства детей — деликатно и результативно.',img:'uploads/luchshie-yuristy-po-semejnym-delam-v-sankt-peterburge.jpg',pts:['Бракоразводный процесс','Алименты и взыскание','Раздел имущества','Опека над детьми'],clr:'#9B8550'},
+    {title:'Трудовые споры',desc:'Незаконное увольнение, невыплата зарплаты, дискриминация — профессиональная защита трудовых прав.',img:'uploads/2f35b21596602b04f8afeadf70e51f3a_original275517.webp',pts:['Незаконное увольнение','Задержка зарплаты','Восстановление на работе','Трудовые договоры'],clr:'#5E4F28'},
+  ];
+  return(
+    <section id="services" style={{padding:'var(--sec-py) 0',background:'#fff'}}>
+      <div ref={r} style={{maxWidth:'1120px',margin:'0 auto',padding:'0 32px'}}>
+        <div className={`rev ${v?'vis':''}`} style={{textAlign:'center',marginBottom:'52px'}}>
+          <Badge c="Услуги" />
+          <h2 className="serif" style={{fontSize:'clamp(28px,3.5vw,44px)',fontWeight:700,color:'var(--g900)'}}>
+            Три направления, <span className="gtext">одна цель</span>
+          </h2>
+          <p style={{fontSize:'16px',color:'var(--fg2)',marginTop:'10px',maxWidth:'460px',margin:'10px auto 0',textWrap:'pretty'}}>Профессиональная защита ваших прав в самых важных жизненных ситуациях</p>
+        </div>
+        <div className="g-3">
+          {svc.map((s,i)=>(
+            <div key={i} className={`card rev td${i+1} ${v?'vis':''}`} style={{background:'#F9F7F3',overflow:'hidden'}}>
+              <div className="svc-img"><img src={s.img} alt={s.title} /></div>
+              <div style={{padding:'24px'}}>
+                <h3 className="serif" style={{fontSize:'20px',fontWeight:700,color:'var(--g900)',marginBottom:'10px'}}>{s.title}</h3>
+                <p style={{fontSize:'14px',color:'var(--fg2)',lineHeight:1.65,marginBottom:'16px',textWrap:'pretty'}}>{s.desc}</p>
+                <ul style={{listStyle:'none',display:'flex',flexDirection:'column',gap:'7px',marginBottom:'20px'}}>
+                  {s.pts.map((p,j)=>(
+                    <li key={j} style={{display:'flex',alignItems:'center',gap:'8px',fontSize:'13px',color:'var(--fg2)'}}>
+                      <span style={{width:'6px',height:'6px',borderRadius:'50%',background:s.clr,flexShrink:0}}></span>{p}
+                    </li>
+                  ))}
+                </ul>
+                <a href="tel:+77066060600" className="btn btn-g" style={{width:'100%',justifyContent:'center',fontSize:'13px',padding:'12px'}}>Получить консультацию ↗</a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* FEATURES */
+function Features(){
+  const [r,v]=useRev();
+  const feats=[
+    {ic:'★',t:'Первичная консультация бесплатно',d:'Оценю ситуацию и расскажу о перспективах без каких-либо обязательств с вашей стороны'},
+    {ic:'⚖',t:'Ведение дела под ключ',d:'Беру на себя всё — от сбора документов до исполнения судебного решения. Вы занимаетесь жизнью'},
+    {ic:'◎',t:'Прозрачная стоимость',d:'Фиксированная цена оговаривается заранее и закрепляется договором. Никаких сюрпризов в процессе'},
+    {ic:'◈',t:'Личное ведение каждого дела',d:'Ваше дело веду я сама, а не помощники. Полная вовлечённость и внимание к деталям'},
+    {ic:'⊞',t:'Опыт в судах Павлодарской области',d:'Знаю местную практику и специфику региона. Это даёт реальное преимущество в деле'},
+    {ic:'⏱',t:'Работаем ежедневно 9:00–20:00',d:'Принимаю в будни и выходные. Экстренная связь по WhatsApp в любое время'},
+  ];
+  return(
+    <section id="about" style={{padding:'var(--sec-py) 0',background:'var(--cr200)'}}>  
+      <div ref={r} style={{maxWidth:'1120px',margin:'0 auto',padding:'0 32px'}}>
+        <div className={`rev ${v?'vis':''}`} style={{marginBottom:'52px'}}>
+          <Badge c="Почему я" />
+          <h2 className="serif" style={{fontSize:'clamp(28px,3.5vw,44px)',fontWeight:700,color:'var(--g900)'}}>
+            Что вы <span className="gtext">получаете</span>
+          </h2>
+        </div>
+        <div className="g-3" style={{gap:'20px'}}>
+          {feats.map((f,i)=>(
+            <div key={i} className={`card rev td${(i%3)+1} ${v?'vis':''}`} style={{padding:'26px'}}>
+              <div style={{width:'48px',height:'48px',borderRadius:'50%',background:'var(--g700)',display:'flex',alignItems:'center',justifyContent:'center',color:'white',fontSize:'20px',marginBottom:'14px'}}>{f.ic}</div>
+              <h3 style={{fontWeight:600,fontSize:'15px',color:'var(--g900)',marginBottom:'8px',lineHeight:1.4}}>{f.t}</h3>
+              <p style={{fontSize:'13px',color:'var(--fg2)',lineHeight:1.65,textWrap:'pretty'}}>{f.d}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* TRUST */
+function Trust(){
+  const [r,v]=useRev();
+  const logos=[{n:'Kaspi Bank',s:'kaspi.kz'},{n:'Halyk',s:'Народный Банк'},{n:'ForteBank',s:'forte.kz'},{n:'BTA Bank',s:'btabank.kz'},{n:'BI Group',s:'bi.group'},{n:'Павлодарэнерго',s:'pav-energo.kz'}];
+  return(
+    <section style={{padding:'60px 0',background:'#fff',borderTop:'1px solid var(--bd)',borderBottom:'1px solid var(--bd)'}}>
+      <div ref={r} style={{maxWidth:'980px',margin:'0 auto',padding:'0 32px'}}>
+        <p className={`rev ${v?'vis':''}`} style={{textAlign:'center',fontSize:'12px',fontWeight:600,color:'var(--fg3)',letterSpacing:'.1em',textTransform:'uppercase',marginBottom:'36px'}}>
+          Нам доверяют клиенты ведущих компаний Казахстана
+        </p>
+        <div className={`rev g-6 ${v?'vis':''}`}>
+          {logos.map((l,i)=>(
+            <div key={i} style={{textAlign:'center',opacity:.38,transition:'opacity .22s',cursor:'default',padding:'6px'}} onMouseEnter={e=>e.currentTarget.style.opacity='.8'} onMouseLeave={e=>e.currentTarget.style.opacity='.38'}>
+              <p className="serif" style={{fontWeight:700,fontSize:'13px',color:'var(--g700)',lineHeight:1.3}}>{l.n}</p>
+              <p style={{fontSize:'10px',color:'var(--fg3)',marginTop:'3px'}}>{l.s}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* TESTIMONIALS */
+function Testimonials(){
+  const [r,v]=useRev();
+  const tms=[
+    {q:'Алия помогла выйти из долговой ямы. Банк угрожал арестом счетов, но через 3 месяца работы добились реструктуризации и сократили долг почти вдвое. Не думал, что это реально.',n:'Марат Ахметов',ro:'Предприниматель, Павлодар',img:'uploads/SmartSelect_20260604_152543_Google.jpg'},
+    {q:'После тяжёлого развода не знал, как защитить права на детей. Алия вела дело чётко и профессионально, объясняла каждый шаг. Суд встал на мою сторону полностью.',n:'Айдос Жаксыбеков',ro:'Инженер, Павлодар',img:'uploads/SmartSelect_20260604_152529_Google.jpg'},
+    {q:'Меня уволили незаконно за день до отпуска. Думал, что один против юристов компании. Алия восстановила на работе и добилась компенсации за три месяца простоя.',n:'Дмитрий Козлов',ro:'Механик, Экибастуз',img:'uploads/SmartSelect_20260604_152513_Google.jpg'},
+  ];
+  return(
+    <section id="reviews" style={{padding:'var(--sec-py) 0',background:'var(--cr200)'}}>  
+      <div ref={r} style={{maxWidth:'1120px',margin:'0 auto',padding:'0 32px'}}>
+        <div className={`rev ${v?'vis':''}`} style={{textAlign:'center',marginBottom:'52px'}}>
+          <Badge c="Отзывы" />
+          <h2 className="serif" style={{fontSize:'clamp(28px,3.5vw,44px)',fontWeight:700,color:'var(--g900)'}}>
+            Говорят <span className="gtext">клиенты</span>
+          </h2>
+        </div>
+        <div className="g-3">
+          {tms.map((t,i)=>(
+            <div key={i} className={`card rev td${i+1} ${v?'vis':''}`} style={{padding:'26px',display:'flex',flexDirection:'column'}}>
+              <div style={{display:'flex',gap:'3px',marginBottom:'14px'}}>{'★★★★★'.split('').map((s,j)=><span key={j} style={{color:'var(--gold)',fontSize:'15px'}}>{s}</span>)}</div>
+              <p style={{fontSize:'14px',color:'var(--fg2)',lineHeight:1.7,fontStyle:'italic',flex:1,textWrap:'pretty'}}>«{t.q}»</p>
+              <div style={{display:'flex',alignItems:'center',gap:'12px',marginTop:'20px',paddingTop:'18px',borderTop:'1px solid var(--bd)'}}>
+                <img src={t.img} alt={t.n} style={{width:'44px',height:'44px',borderRadius:'50%',objectFit:'cover',objectPosition:'top'}} />
+                <div>
+                  <p style={{fontWeight:600,fontSize:'14px',color:'var(--fg1)'}}>{t.n}</p>
+                  <p style={{fontSize:'12px',color:'var(--fg3)'}}>{t.ro}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* FAQ */
+function FAQ(){
+  const [r,v]=useRev(); const [open,setOpen]=useState(null);
+  const faqs=[
+    {q:'Сколько стоит консультация?',a:'Первичная консультация бесплатна — без ограничения по времени. Выслушаю ситуацию, оценю перспективы и объясню варианты решения. Стоимость ведения дела фиксируется в договоре после первой встречи.'},
+    {q:'Как долго рассматривается дело в суде?',a:'Сроки зависят от категории. Семейные споры — в среднем 2–4 месяца. Кредитные — от 3 до 6 месяцев. Трудовые — 1–3 месяца. Правильная подготовка документов помогает сократить эти сроки.'},
+    {q:'Нужно ли мне присутствовать на заседаниях?',a:'Необязательно. Могу представлять ваши интересы по нотариальной доверенности. Ваше личное присутствие необходимо лишь в отдельных категориях дел, где суд требует этого.'},
+    {q:'Что делать, если банк уже подал на меня в суд?',a:'Не паникуйте. Даже получив повестку, у вас есть возможности для защиты. Свяжитесь как можно скорее — чем раньше мы начнём, тем больше аргументов подготовим. Промедление работает против вас.'},
+    {q:'Можно ли оформить алименты без суда?',a:'Да. Если оба родителя согласны, оформляется нотариальное соглашение об алиментах — быстрее и дешевле суда. Помогу составить документ, который защитит интересы детей и будет иметь силу исполнительного листа.'},
+    {q:'Что делать при незаконном увольнении?',a:'Срок обжалования в Казахстане — один месяц. Сохраните трудовой договор, приказы и переписку с работодателем. Обратитесь сразу — оценю шансы на восстановление или выплату компенсации.'},
+  ];
+  return(
+    <section id="faq" style={{padding:'var(--sec-py) 0',background:'#fff'}}>
+      <div ref={r} style={{maxWidth:'760px',margin:'0 auto',padding:'0 32px'}}>
+        <div className={`rev ${v?'vis':''}`} style={{textAlign:'center',marginBottom:'52px'}}>
+          <Badge c="FAQ" />
+          <h2 className="serif" style={{fontSize:'clamp(28px,3.5vw,44px)',fontWeight:700,color:'var(--g900)'}}>
+            Частые <span className="gtext">вопросы</span>
+          </h2>
+        </div>
+        <div className={`rev ${v?'vis':''}`} style={{display:'flex',flexDirection:'column',gap:'10px'}}>
+          {faqs.map((f,i)=>(
+            <div key={i} style={{background:'#F9F7F3',borderRadius:'16px',border:'1px solid var(--bd)',overflow:'hidden'}}>
+              <button onClick={()=>setOpen(open===i?null:i)} style={{width:'100%',display:'flex',alignItems:'center',justifyContent:'space-between',gap:'16px',padding:'18px 22px',background:'none',border:'none',cursor:'pointer',textAlign:'left'}} onMouseEnter={e=>e.currentTarget.style.background='rgba(244,239,230,.8)'} onMouseLeave={e=>e.currentTarget.style.background='none'}>
+                <div style={{display:'flex',alignItems:'center',gap:'12px'}}>
+                  <span className="serif" style={{fontWeight:700,fontSize:'13px',color:'var(--gold-l)',minWidth:'26px'}}>{String(i+1).padStart(2,'0')}.</span>
+                  <span style={{fontWeight:500,fontSize:'15px',color:'var(--fg1)',textWrap:'balance'}}>{f.q}</span>
+                </div>
+                <span style={{color:'var(--gold)',fontSize:'22px',flexShrink:0,lineHeight:1,transition:'transform .3s',transform:open===i?'rotate(45deg)':'none'}}>+</span>
+              </button>
+              <div className={`faq-body ${open===i?'open':''}`}>
+                <p style={{padding:'0 22px 20px 50px',fontSize:'14px',color:'var(--fg2)',lineHeight:1.72,textWrap:'pretty'}}>{f.a}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* CTA */
+function CtaSection(){
+  const [r,v]=useRev();
+  return(
+    <section style={{padding:'var(--sec-py) 32px',background:'var(--g700)',position:'relative',overflow:'hidden'}}>
+      <div style={{position:'absolute',inset:0,opacity:.055}}>
+        <svg width="100%" height="100%"><defs><pattern id="g2" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0L0 0 0 48" fill="none" stroke="white" strokeWidth="1"/></pattern></defs><rect width="100%" height="100%" fill="url(#g2)"/></svg>
+      </div>
+      <div className="orb" style={{width:'320px',height:'320px',background:'#2E6B40',top:'-80px',right:'-60px',opacity:.45}}></div>
+      <div className="orb" style={{width:'200px',height:'200px',background:'#9B8550',bottom:'-40px',left:'10%',opacity:.3}}></div>
+      <div ref={r} className={`rev ${v?'vis':''}`} style={{maxWidth:'700px',margin:'0 auto',textAlign:'center',position:'relative'}}>
+        <h2 className="serif" style={{fontSize:'clamp(28px,4vw,50px)',fontWeight:700,color:'white',marginBottom:'14px',lineHeight:1.2}}>
+          Готовы решить<br/><span style={{color:'var(--gold-l)'}}>вашу проблему?</span>
+        </h2>
+        <p style={{fontSize:'16px',color:'rgba(255,255,255,.68)',marginBottom:'32px',textWrap:'pretty'}}>Первичная консультация бесплатна. Ежедневно с 9:00 до 20:00.</p>
+        <div className="cta-btns" style={{display:'flex',flexWrap:'wrap',justifyContent:'center',gap:'12px'}}>
+          <a href="tel:+77066060600" className="btn btn-g" style={{fontSize:'15px',padding:'15px 32px',boxShadow:'0 4px 20px rgba(155,133,80,.4)'}}>Связаться с юристом ↗</a>
+          <a href="https://wa.me/77066060600" className="btn btn-ghost" style={{fontSize:'15px',padding:'14px 28px'}}>Написать в WhatsApp</a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* FOOTER */
+function Footer(){
+  return(
+    <footer style={{background:'var(--g900)',color:'white',paddingTop:'72px',paddingBottom:'32px'}}>
+      <div style={{maxWidth:'1120px',margin:'0 auto',padding:'0 32px'}}>
+        <div className="g-footer" style={{marginBottom:'56px'}}>
+          <div>
+            <p className="serif" style={{fontWeight:700,fontSize:'22px',marginBottom:'12px'}}>Алия Сейткали</p>
+            <p style={{fontSize:'13px',color:'rgba(255,255,255,.42)',lineHeight:1.7,marginBottom:'20px',textWrap:'pretty'}}>Юридические услуги в Павлодаре. Профессиональная защита ваших прав с 2016 года.</p>
+            <div style={{display:'flex',gap:'8px'}}>
+              {[['ВК','#'],['TG','https://t.me/'],['WA','https://wa.me/77066060600'],['IG','#']].map(([s,h])=>(
+                <a key={s} href={h} style={{width:'33px',height:'33px',borderRadius:'50%',background:'rgba(255,255,255,.08)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'11px',color:'rgba(255,255,255,.55)',textDecoration:'none',transition:'all .2s'}} onMouseEnter={e=>{e.currentTarget.style.background='var(--gold)';e.currentTarget.style.color='white';}} onMouseLeave={e=>{e.currentTarget.style.background='rgba(255,255,255,.08)';e.currentTarget.style.color='rgba(255,255,255,.55)';}}>{s}</a>
+              ))}
+            </div>
+          </div>
+          {[{h:'Услуги',lnks:['Кредиты и долги','Семейное право','Трудовые споры','Консультация']},{h:'Навигация',lnks:['О юристе','Отзывы','FAQ','Контакты']}].map(c=>(
+            <div key={c.h}>
+              <p style={{fontSize:'11px',fontWeight:600,color:'rgba(255,255,255,.45)',letterSpacing:'.1em',textTransform:'uppercase',marginBottom:'20px'}}>{c.h}</p>
+              <ul style={{listStyle:'none',display:'flex',flexDirection:'column',gap:'12px'}}>
+                {c.lnks.map(l=><li key={l}><a href="#services" style={{fontSize:'13px',color:'rgba(255,255,255,.48)',textDecoration:'none',transition:'color .2s'}} onMouseEnter={e=>e.target.style.color='var(--gold-l)'} onMouseLeave={e=>e.target.style.color='rgba(255,255,255,.48)'}>{l}</a></li>)}
+              </ul>
+            </div>
+          ))}
+          <div>
+            <p style={{fontSize:'11px',fontWeight:600,color:'rgba(255,255,255,.45)',letterSpacing:'.1em',textTransform:'uppercase',marginBottom:'20px'}}>Контакты</p>
+            <div style={{display:'flex',flexDirection:'column',gap:'14px'}}>
+              {[{ic:'📞',t:'+7 706 606-06-00',s:'Ежедневно 9:00–20:00'},{ic:'📍',t:'г. Павлодар',s:'Приём по записи'},{ic:'💬',t:'Консультация бесплатно',s:'Первичный приём'}].map((c,i)=>(
+                <div key={i} style={{display:'flex',alignItems:'flex-start',gap:'10px'}}>
+                  <span style={{color:'var(--gold)',flexShrink:0,marginTop:'1px'}}>{c.ic}</span>
+                  <div>
+                    <p style={{fontSize:'13px',color:'white',fontWeight:500}}>{c.t}</p>
+                    <p style={{fontSize:'11px',color:'rgba(255,255,255,.38)',marginTop:'2px'}}>{c.s}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div style={{borderTop:'1px solid rgba(255,255,255,.09)',paddingTop:'28px',display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:'8px'}}>
+          <p style={{fontSize:'12px',color:'rgba(255,255,255,.3)'}}>© 2026 Алия Сейткали. Все права защищены.</p>
+          <p style={{fontSize:'12px',color:'rgba(255,255,255,.3)'}}>Юридические услуги в Павлодаре, Казахстан</p>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+const ACCENT_OPTIONS=[
+  ["#9B8550","#7D6840","#C4AD7A"],
+  ["#2A7070","#1E5252","#6AABAB"],
+  ["#B55A3A","#8E4228","#D4937A"],
+  ["#4A6A9C","#364E78","#8BA4CC"],
+];
+const BG_OPTIONS=[
+  ["#F4EFE6","#EDE7DA","#E2DBD0"],
+  ["#EFF3EE","#E2EDE1","#D4E4D3"],
+  ["#F5F3EF","#EDE8E0","#E0D8CD"],
+  ["#F8F7F5","#F0EEED","#E5E0DA"],
+];
+const FONT_PARAMS={
+  'Playfair Display':'Playfair+Display:ital,wght@0,400;0,600;0,700;1,400',
+  'Cormorant Garamond':'Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400',
+  'Libre Baskerville':'Libre+Baskerville:ital,wght@0,400;0,700;1,400',
+  'DM Serif Display':'DM+Serif+Display:ital,wght@0,400;1,400',
+};
+
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "accent": [
+    "#B55A3A",
+    "#8E4228",
+    "#D4937A"
+  ],
+  "bgPalette": [
+    "#F4EFE6",
+    "#EDE7DA",
+    "#E2DBD0"
+  ],
+  "headingFont": "Playfair Display",
+  "bodySize": 16,
+  "spacing": "compact",
+  "cardRadius": 20,
+  "cardShadows": true,
+  "heroLine1": "Ваш надёжный",
+  "ctaText": "Связаться со мной",
+  "showOrbs": true,
+  "showBadges": true,
+  "scrollAnims": true,
+  "parallax": true,
+  "animSpeed": "normal"
+}/*EDITMODE-END*/;
+
+function App(){
+  const [t,setTweak]=useTweaks(TWEAK_DEFAULTS);
+
+  useEffect(()=>{
+    const r=document.documentElement.style;
+    // Accent palette
+    const [ac,ah,al]=Array.isArray(t.accent)?t.accent:[t.accent,t.accent,t.accent];
+    r.setProperty('--gold',ac); r.setProperty('--gold-h',ah); r.setProperty('--gold-l',al);
+    // Background palette
+    const [bg1,bg2,bd]=Array.isArray(t.bgPalette)?t.bgPalette:[t.bgPalette,t.bgPalette,t.bgPalette];
+    r.setProperty('--cr200',bg1); r.setProperty('--cr300',bg2); r.setProperty('--bd',bd);
+    // Spacing
+    r.setProperty('--sec-py',{compact:'64px',regular:'96px',spacious:'132px'}[t.spacing]||'96px');
+    // Card radius
+    r.setProperty('--card-r',t.cardRadius+'px');
+    // Heading font
+    r.setProperty('--heading-font',`'${t.headingFont}'`);
+    // Dynamic font load
+    const fp=FONT_PARAMS[t.headingFont];
+    if(fp){
+      const id='tf-'+t.headingFont.replace(/\s/g,'');
+      if(!document.getElementById(id)){
+        const lk=document.createElement('link');
+        lk.id=id; lk.rel='stylesheet';
+        lk.href=`https://fonts.googleapis.com/css2?family=${fp}&display=swap`;
+        document.head.appendChild(lk);
+      }
+    }
+    // Data attrs for CSS toggles
+    document.documentElement.setAttribute('data-shadows',t.cardShadows?'1':'0');
+    document.documentElement.setAttribute('data-anim',t.scrollAnims?'1':'0');
+    document.documentElement.setAttribute('data-anim-speed',t.animSpeed);
+  },[t]);
+
+  return(
+    <div>
+      <Nav/>
+      <Hero heroLine1={t.heroLine1} ctaText={t.ctaText} showOrbs={t.showOrbs} showBadges={t.showBadges} doParallax={t.parallax}/>
+      <Services/><Features/><Trust/><Testimonials/><FAQ/><CtaSection/><Footer/>
+      <a href="https://wa.me/77066060600" className="wa" target="_blank" rel="noopener" title="WhatsApp">💬</a>
+      <TweaksPanel>
+        <TweakSection label="Цвета" />
+        <TweakColor label="Акцентный цвет" value={t.accent}
+          options={ACCENT_OPTIONS}
+          onChange={v=>setTweak('accent',v)} />
+        <TweakColor label="Фоновая палитра" value={t.bgPalette}
+          options={BG_OPTIONS}
+          onChange={v=>setTweak('bgPalette',v)} />
+
+        <TweakSection label="Типографика" />
+        <TweakSelect label="Шрифт заголовков" value={t.headingFont}
+          options={Object.keys(FONT_PARAMS)}
+          onChange={v=>setTweak('headingFont',v)} />
+        <TweakSlider label="Размер текста" value={t.bodySize} min={14} max={18} step={1} unit="px"
+          onChange={v=>setTweak('bodySize',v)} />
+
+        <TweakSection label="Макет" />
+        <TweakRadio label="Отступы секций" value={t.spacing}
+          options={['compact','regular','spacious']}
+          onChange={v=>setTweak('spacing',v)} />
+        <TweakSlider label="Скругление карточек" value={t.cardRadius} min={8} max={32} step={2} unit="px"
+          onChange={v=>setTweak('cardRadius',v)} />
+        <TweakToggle label="Тени на карточках" value={t.cardShadows}
+          onChange={v=>setTweak('cardShadows',v)} />
+
+        <TweakSection label="Герой" />
+        <TweakText label="Заголовок — строка 1" value={t.heroLine1}
+          onChange={v=>setTweak('heroLine1',v)} />
+        <TweakText label="Текст кнопки CTA" value={t.ctaText}
+          onChange={v=>setTweak('ctaText',v)} />
+        <TweakToggle label="Плавающие орбы" value={t.showOrbs}
+          onChange={v=>setTweak('showOrbs',v)} />
+        <TweakToggle label="Бейджи на фото" value={t.showBadges}
+          onChange={v=>setTweak('showBadges',v)} />
+
+        <TweakSection label="Анимации" />
+        <TweakToggle label="Анимации при скролле" value={t.scrollAnims}
+          onChange={v=>setTweak('scrollAnims',v)} />
+        <TweakToggle label="Параллакс фона" value={t.parallax}
+          onChange={v=>setTweak('parallax',v)} />
+        <TweakRadio label="Скорость" value={t.animSpeed}
+          options={['fast','normal','slow']}
+          onChange={v=>setTweak('animSpeed',v)} />
+      </TweaksPanel>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
