@@ -15,6 +15,8 @@ function useRev(thr = 0.12) {
   return [ref, vis]
 }
 
+const BASE = import.meta.env.BASE_URL
+
 const Badge = ({ c }) => (
   <span style={{ display: 'inline-block', padding: '6px 16px', borderRadius: '999px', fontSize: '12px', fontWeight: 600, letterSpacing: '.07em', textTransform: 'uppercase', color: 'var(--gold)', border: '1px solid rgba(155,133,80,.3)', background: 'rgba(155,133,80,.05)', marginBottom: '16px' }}>{c}</span>
 )
@@ -23,21 +25,21 @@ const svc = [
   {
     title: 'Кредиты и долги',
     desc: 'Реструктуризация долга, защита от коллекторов, оспаривание кредитных договоров и снятие арестов с имущества.',
-    img: '/uploads/settlement.jpg',
+    img: `${BASE}uploads/settlement.jpg`,
     pts: ['Реструктуризация долга', 'Защита от коллекторов', 'Оспаривание договора', 'Снятие ареста'],
     clr: '#1B4A2A',
   },
   {
     title: 'Семейное право',
     desc: 'Развод, раздел имущества, алименты, определение места жительства детей — деликатно и результативно.',
-    img: '/uploads/luchshie-yuristy-po-semejnym-delam-v-sankt-peterburge.jpg',
+    img: `${BASE}uploads/luchshie-yuristy-po-semejnym-delam-v-sankt-peterburge.jpg`,
     pts: ['Бракоразводный процесс', 'Алименты и взыскание', 'Раздел имущества', 'Опека над детьми'],
     clr: '#9B8550',
   },
   {
     title: 'Трудовые споры',
     desc: 'Незаконное увольнение, невыплата зарплаты, дискриминация — профессиональная защита трудовых прав.',
-    img: '/uploads/2f35b21596602b04f8afeadf70e51f3a_original275517.webp',
+    img: `${BASE}uploads/2f35b21596602b04f8afeadf70e51f3a_original275517.webp`,
     pts: ['Незаконное увольнение', 'Задержка зарплаты', 'Восстановление на работе', 'Трудовые договоры'],
     clr: '#5E4F28',
   },

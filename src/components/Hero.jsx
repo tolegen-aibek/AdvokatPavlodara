@@ -7,6 +7,8 @@ const stats = [
   { n: '600+', l: 'довольных клиентов' },
 ]
 
+const BASE = import.meta.env.BASE_URL
+
 export default function Hero({ heroLine1, ctaText, showOrbs, showBadges, doParallax }) {
   const [py, setPy] = useState(0)
 
@@ -57,9 +59,9 @@ export default function Hero({ heroLine1, ctaText, showOrbs, showBadges, doParal
             <div className="hi4" style={{ display: 'flex', alignItems: 'center', gap: '16px', paddingTop: '24px', borderTop: '1px solid var(--bd)' }}>
               <div style={{ display: 'flex' }}>
                 {[
-                  '/uploads/SmartSelect_20260604_152543_Google.jpg',
-                  '/uploads/SmartSelect_20260604_152529_Google.jpg',
-                  '/uploads/SmartSelect_20260604_152513_Google.jpg',
+                  `${BASE}uploads/SmartSelect_20260604_152529_Google.jpg`,
+                  `${BASE}uploads/SmartSelect_20260604_152543_Google.jpg`,
+                  `${BASE}uploads/SmartSelect_20260604_152646_Google.jpg`,
                 ].map((s, i) => (
                   <img key={i} src={s} alt="" style={{ width: '36px', height: '36px', borderRadius: '50%', objectFit: 'cover', objectPosition: 'top', border: '2px solid var(--cr200)', marginLeft: i ? '-10px' : '0' }} />
                 ))}
@@ -76,7 +78,7 @@ export default function Hero({ heroLine1, ctaText, showOrbs, showBadges, doParal
               <div style={{ position: 'absolute', inset: '-16px', borderRadius: '34px', border: '1px solid rgba(155,133,80,.22)' }} />
               <div style={{ position: 'absolute', inset: '-32px', borderRadius: '42px', border: '1px solid rgba(155,133,80,.1)' }} />
               <div className="hero-photo-wrap" style={{ width: '320px', height: '460px', borderRadius: '28px', overflow: 'hidden', background: 'linear-gradient(160deg,#EDE7DA,#F4EFE6)', boxShadow: '0 28px 80px rgba(13,43,26,.18)' }}>
-                <img src="/uploads/lawyer_photo-1780568895176.png" alt="Юрист Алия Сейткали Павлодар" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }} />
+                <img src={`${BASE}uploads/lawyer_photo-1780568895176.png`} alt="Юрист Алия Сейткали Павлодар" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }} />
               </div>
               {showBadges && (
                 <div className="float" style={{ position: 'absolute', top: '-16px', right: '-28px', background: 'var(--gold)', color: 'white', borderRadius: '20px', padding: '13px 18px', boxShadow: '0 8px 28px rgba(155,133,80,.42)', animationDelay: '.8s' }}>

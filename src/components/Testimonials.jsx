@@ -19,24 +19,26 @@ const Badge = ({ c }) => (
   <span style={{ display: 'inline-block', padding: '6px 16px', borderRadius: '999px', fontSize: '12px', fontWeight: 600, letterSpacing: '.07em', textTransform: 'uppercase', color: 'var(--gold)', border: '1px solid rgba(155,133,80,.3)', background: 'rgba(155,133,80,.05)', marginBottom: '16px' }}>{c}</span>
 )
 
+const BASE = import.meta.env.BASE_URL
+
 const tms = [
   {
     q: 'Алия помогла выйти из долговой ямы. Банк угрожал арестом счетов, но через 3 месяца работы добились реструктуризации и сократили долг почти вдвое. Не думал, что это реально.',
     n: 'Марат Ахметов',
     ro: 'Предприниматель, Павлодар',
-    img: '/uploads/SmartSelect_20260604_152543_Google.jpg',
+    img: `${BASE}uploads/SmartSelect_20260604_152646_Google.jpg`,
   },
   {
     q: 'После тяжёлого развода не знал, как защитить права на детей. Алия вела дело чётко и профессионально, объясняла каждый шаг. Суд встал на мою сторону полностью.',
     n: 'Айдос Жаксыбеков',
     ro: 'Инженер, Павлодар',
-    img: '/uploads/SmartSelect_20260604_152529_Google.jpg',
+    img: `${BASE}uploads/SmartSelect_20260604_152626_Google.jpg`,
   },
   {
     q: 'Меня уволили незаконно за день до отпуска. Думал, что один против юристов компании. Алия восстановила на работе и добилась компенсации за три месяца простоя.',
     n: 'Дмитрий Козлов',
     ro: 'Механик, Экибастуз',
-    img: '/uploads/SmartSelect_20260604_152513_Google.jpg',
+    img: `${BASE}uploads/SmartSelect_20260604_152513_Google.jpg`,
   },
 ]
 
