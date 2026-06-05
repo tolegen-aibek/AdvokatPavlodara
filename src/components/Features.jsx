@@ -17,7 +17,7 @@ const feats = [
 export default function Features() {
   return (
     <section id="about" style={{ padding: 'var(--sec-py) 0', background: 'var(--cr200)' }}>
-      <div style={{ maxWidth: '1120px', margin: '0 auto', padding: '0 32px' }}>
+      <div className="s-pad" style={{ maxWidth: '1120px', margin: '0 auto' }}>
 
         <motion.div variants={fadeLeft} initial="hidden" whileInView="show" viewport={VIEWPORT}
           style={{ marginBottom: '52px' }}>

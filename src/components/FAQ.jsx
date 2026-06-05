@@ -20,7 +20,7 @@ export default function FAQ() {
 
   return (
     <section id="faq" style={{ padding: 'var(--sec-py) 0', background: '#fff' }}>
-      <div style={{ maxWidth: '760px', margin: '0 auto', padding: '0 32px' }}>
+      <div className="s-pad" style={{ maxWidth: '760px', margin: '0 auto' }}>
 
         <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={VIEWPORT}
           style={{ textAlign: 'center', marginBottom: '52px' }}>

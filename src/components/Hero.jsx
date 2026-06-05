@@ -37,7 +37,7 @@ export default function Hero({ heroLine1, ctaText, showOrbs, showBadges, doParal
         </>
       )}
 
-      <div style={{ position: 'relative', maxWidth: '1120px', margin: '0 auto', padding: '0 32px', width: '100%' }}>
+      <div className="s-pad" style={{ position: 'relative', maxWidth: '1120px', margin: '0 auto', width: '100%' }}>
         <div className="g-hero">
 
           {/* Left col */}
@@ -52,7 +52,7 @@ export default function Hero({ heroLine1, ctaText, showOrbs, showBadges, doParal
               {[heroLine1, 'юрист рядом'].map((line, li) => (
                 <div key={li} style={{ overflow: 'hidden' }}>
                   {line.split(' ').map((word, wi) => (
-                    <motion.span key={wi} variants={heroWord} style={{ display: 'inline-block', marginRight: '0.28em', fontFamily: 'var(--heading-font,"Playfair Display"),Georgia,serif', fontSize: 'clamp(40px,5vw,64px)', fontWeight: 700, lineHeight: 1.1, color: li === 1 && word === 'юрист' ? 'transparent' : 'var(--g900)', letterSpacing: '-.02em', ...(li === 1 && word === 'юрист' ? { background: 'linear-gradient(130deg,var(--gold) 0%,var(--gold-l) 48%,var(--gold) 95%)', backgroundSize: '200% auto', WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent', animation: 'shimmer 3.5s linear infinite' } : {}) }}>
+                    <motion.span key={wi} variants={heroWord} className="hero-title-word" style={{ display: 'inline-block', marginRight: '0.28em', fontFamily: 'var(--heading-font,"Playfair Display"),Georgia,serif', fontSize: 'clamp(40px,5vw,64px)', fontWeight: 700, lineHeight: 1.1, color: li === 1 && word === 'юрист' ? 'transparent' : 'var(--g900)', letterSpacing: '-.02em', ...(li === 1 && word === 'юрист' ? { background: 'linear-gradient(130deg,var(--gold) 0%,var(--gold-l) 48%,var(--gold) 95%)', backgroundSize: '200% auto', WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent', animation: 'shimmer 3.5s linear infinite' } : {}) }}>
                       {word}
                     </motion.span>
                   ))}
@@ -91,15 +91,15 @@ export default function Hero({ heroLine1, ctaText, showOrbs, showBadges, doParal
             initial={{ opacity: 0, x: 60 }} animate={{ opacity: 1, x: 0 }}
             transition={{ type: 'spring', stiffness: 60, damping: 18, delay: 0.3 }}>
             <motion.div style={{ position: 'relative' }} style2={{ y: photoY }}>
-              <div style={{ position: 'absolute', inset: '-16px', borderRadius: '34px', border: '1px solid rgba(155,133,80,.22)' }} />
-              <div style={{ position: 'absolute', inset: '-32px', borderRadius: '42px', border: '1px solid rgba(155,133,80,.1)' }} />
+              <div className="hero-deco" style={{ position: 'absolute', inset: '-16px', borderRadius: '34px', border: '1px solid rgba(155,133,80,.22)' }} />
+              <div className="hero-deco" style={{ position: 'absolute', inset: '-32px', borderRadius: '42px', border: '1px solid rgba(155,133,80,.1)' }} />
               <motion.div className="hero-photo-wrap" style={{ width: '320px', height: '460px', borderRadius: '28px', overflow: 'hidden', background: 'linear-gradient(160deg,#EDE7DA,#F4EFE6)', boxShadow: '0 28px 80px rgba(13,43,26,.18)', y: photoY }}
                 whileHover={{ scale: 1.02, transition: { type: 'spring', stiffness: 200, damping: 20 } }}>
                 <img src={`${BASE}uploads/lawyer_photo-1780568895176.png`} alt="Юрист Алия Сейткали Павлодар" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }} />
               </motion.div>
 
               {showBadges && (
-                <motion.div style={{ position: 'absolute', top: '-16px', right: '-28px', background: 'var(--gold)', color: 'white', borderRadius: '20px', padding: '13px 18px', boxShadow: '0 8px 28px rgba(155,133,80,.42)' }}
+                <motion.div className="hero-deco" style={{ position: 'absolute', top: '-16px', right: '-28px', background: 'var(--gold)', color: 'white', borderRadius: '20px', padding: '13px 18px', boxShadow: '0 8px 28px rgba(155,133,80,.42)' }}
                   initial={{ opacity: 0, scale: 0.5, rotate: -12 }} animate={{ opacity: 1, scale: 1, rotate: 0 }}
                   transition={{ type: 'spring', stiffness: 120, damping: 14, delay: 0.7 }}
                   {...floatAnim(0.8)}>
@@ -109,7 +109,7 @@ export default function Hero({ heroLine1, ctaText, showOrbs, showBadges, doParal
               )}
 
               {showBadges && (
-                <motion.div style={{ position: 'absolute', bottom: '-16px', left: '-28px', background: 'white', borderRadius: '18px', padding: '13px 16px', boxShadow: '0 8px 32px rgba(0,0,0,.1)', display: 'flex', alignItems: 'center', gap: '10px', maxWidth: '218px' }}
+                <motion.div className="hero-deco" style={{ position: 'absolute', bottom: '-16px', left: '-28px', background: 'white', borderRadius: '18px', padding: '13px 16px', boxShadow: '0 8px 32px rgba(0,0,0,.1)', display: 'flex', alignItems: 'center', gap: '10px', maxWidth: '218px' }}
                   initial={{ opacity: 0, scale: 0.5, rotate: 12 }} animate={{ opacity: 1, scale: 1, rotate: 0 }}
                   transition={{ type: 'spring', stiffness: 120, damping: 14, delay: 1.0 }}
                   {...floatAnim(1.6)}>
@@ -125,7 +125,7 @@ export default function Hero({ heroLine1, ctaText, showOrbs, showBadges, doParal
         </div>
 
         {/* Stats row */}
-        <motion.div className="g-4" style={{ marginTop: '60px' }}
+        <motion.div className="g-4 hero-stats" style={{ marginTop: '60px' }}
           variants={staggerContainer(0.08, 0.1)} initial="hidden" animate="show">
           {stats.map((s, i) => (
             <motion.div key={i} variants={scaleUp} whileHover={{ y: -4, transition: { type: 'spring', stiffness: 300 } }}

@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <footer style={{ background: 'var(--g900)', color: 'white', paddingTop: '72px', paddingBottom: '32px' }}>
-      <div style={{ maxWidth: '1120px', margin: '0 auto', padding: '0 32px' }}>
+      <div className="s-pad" style={{ maxWidth: '1120px', margin: '0 auto' }}>
         <div className="g-footer" style={{ marginBottom: '56px' }}>
           <div>
             <p className="serif" style={{ fontWeight: 700, fontSize: '22px', marginBottom: '12px' }}>Алия Сейткали</p>

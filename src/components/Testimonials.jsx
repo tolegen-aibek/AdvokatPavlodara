@@ -31,7 +31,7 @@ const tms = [
 export default function Testimonials() {
   return (
     <section id="reviews" style={{ padding: 'var(--sec-py) 0', background: 'var(--cr200)' }}>
-      <div style={{ maxWidth: '1120px', margin: '0 auto', padding: '0 32px' }}>
+      <div className="s-pad" style={{ maxWidth: '1120px', margin: '0 auto' }}>
 
         <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={VIEWPORT}
           style={{ textAlign: 'center', marginBottom: '52px' }}>

@@ -13,7 +13,7 @@ const logos = [
 export default function Trust() {
   return (
     <section style={{ padding: '60px 0', background: '#fff', borderTop: '1px solid var(--bd)', borderBottom: '1px solid var(--bd)' }}>
-      <div style={{ maxWidth: '980px', margin: '0 auto', padding: '0 32px' }}>
+      <div className="s-pad" style={{ maxWidth: '980px', margin: '0 auto' }}>
         <motion.p variants={fadeUp} initial="hidden" whileInView="show" viewport={VIEWPORT}
           style={{ textAlign: 'center', fontSize: '12px', fontWeight: 600, color: 'var(--fg3)', letterSpacing: '.1em', textTransform: 'uppercase', marginBottom: '36px' }}>
           Нам доверяют клиенты ведущих компаний Казахстана

@@ -30,6 +30,7 @@ body {
   background: var(--cr200);
   color: var(--fg1);
   font-size: var(--body-sz, 16px);
+  overflow-x: hidden;
 }
 
 .serif { font-family: var(--heading-font, 'Playfair Display'), Georgia, serif; }
@@ -158,3 +159,24 @@ body {
 [data-anim-speed="fast"] .hi3, [data-anim-speed="fast"] .hi4, [data-anim-speed="fast"] .hi5 { animation-duration: .4s !important; }
 [data-anim-speed="slow"] .hi0, [data-anim-speed="slow"] .hi1, [data-anim-speed="slow"] .hi2,
 [data-anim-speed="slow"] .hi3, [data-anim-speed="slow"] .hi4, [data-anim-speed="slow"] .hi5 { animation-duration: 1.8s !important; }
+
+/* ─── Responsive container padding ─── */
+.s-pad { padding-left: 32px; padding-right: 32px; }
+
+@media (max-width: 760px) {
+  :root { --sec-py: 64px; }
+  .s-pad { padding-left: 20px; padding-right: 20px; }
+  .cta-section-pad { padding-left: 20px !important; padding-right: 20px !important; }
+}
+
+@media (max-width: 540px) {
+  :root { --sec-py: 48px; }
+  .s-pad { padding-left: 16px; padding-right: 16px; }
+  .cta-section-pad { padding-left: 16px !important; padding-right: 16px !important; }
+  /* Hide floating badge cards and rings that overflow on small phones */
+  .hero-deco { display: none !important; }
+  /* Tighter stats row on mobile */
+  .hero-stats { margin-top: 36px !important; }
+  /* Shrink hero title min size */
+  .hero-title-word { font-size: clamp(32px, 8.5vw, 64px) !important; }
+}

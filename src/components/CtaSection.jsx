@@ -3,7 +3,7 @@ import { fadeUp, staggerContainer, VIEWPORT, floatAnim } from '../animations'
 
 export default function CtaSection() {
   return (
-    <section style={{ padding: 'var(--sec-py) 32px', background: 'var(--g700)', position: 'relative', overflow: 'hidden' }}>
+    <section className="cta-section-pad" style={{ paddingTop: 'var(--sec-py)', paddingBottom: 'var(--sec-py)', background: 'var(--g700)', position: 'relative', overflow: 'hidden' }}>
       <div style={{ position: 'absolute', inset: 0, opacity: .055 }}>
         <svg width="100%" height="100%">
           <defs><pattern id="g2" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0L0 0 0 48" fill="none" stroke="white" strokeWidth="1" /></pattern></defs>
