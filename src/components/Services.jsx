@@ -1,19 +1,5 @@
-import { useState, useEffect, useRef } from 'react'
-
-function useRev(thr = 0.12) {
-  const ref = useRef(null)
-  const [vis, setVis] = useState(false)
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const obs = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) { setVis(true); obs.disconnect() }
-    }, { threshold: thr })
-    obs.observe(el)
-    return () => obs.disconnect()
-  }, [])
-  return [ref, vis]
-}
+import { motion } from 'framer-motion'
+import { fadeUp, scaleUp, staggerContainer, VIEWPORT } from '../animations'
 
 const BASE = import.meta.env.BASE_URL
 
@@ -46,36 +32,47 @@ const svc = [
 ]
 
 export default function Services() {
-  const [r, v] = useRev()
   return (
     <section id="services" style={{ padding: 'var(--sec-py) 0', background: '#fff' }}>
-      <div ref={r} style={{ maxWidth: '1120px', margin: '0 auto', padding: '0 32px' }}>
-        <div className={`rev ${v ? 'vis' : ''}`} style={{ textAlign: 'center', marginBottom: '52px' }}>
+      <div style={{ maxWidth: '1120px', margin: '0 auto', padding: '0 32px' }}>
+
+        <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={VIEWPORT}
+          style={{ textAlign: 'center', marginBottom: '52px' }}>
           <Badge c="Услуги" />
           <h2 className="serif" style={{ fontSize: 'clamp(28px,3.5vw,44px)', fontWeight: 700, color: 'var(--g900)' }}>
             Три направления, <span className="gtext">одна цель</span>
           </h2>
           <p style={{ fontSize: '16px', color: 'var(--fg2)', marginTop: '10px', maxWidth: '460px', margin: '10px auto 0' }}>Профессиональная защита ваших прав в самых важных жизненных ситуациях</p>
-        </div>
-        <div className="g-3">
+        </motion.div>
+
+        <motion.div className="g-3" variants={staggerContainer(0.14)} initial="hidden" whileInView="show" viewport={VIEWPORT}>
           {svc.map((s, i) => (
-            <div key={i} className={`card rev td${i + 1} ${v ? 'vis' : ''}`} style={{ background: '#F9F7F3', overflow: 'hidden' }}>
-              <div className="svc-img"><img src={s.img} alt={s.title} /></div>
+            <motion.div key={i} variants={scaleUp}
+              whileHover={{ y: -8, boxShadow: '0 24px 60px rgba(0,0,0,0.13)', transition: { type: 'spring', stiffness: 280, damping: 22 } }}
+              style={{ background: '#F9F7F3', overflow: 'hidden', borderRadius: 'var(--card-r,20px)', border: '1px solid var(--bd)' }}>
+              <div className="svc-img" style={{ overflow: 'hidden', height: '210px', borderRadius: '12px' }}>
+                <motion.img src={s.img} alt={s.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  whileHover={{ scale: 1.07, transition: { duration: 0.45, ease: 'easeOut' } }} />
+              </div>
               <div style={{ padding: '24px' }}>
                 <h3 className="serif" style={{ fontSize: '20px', fontWeight: 700, color: 'var(--g900)', marginBottom: '10px' }}>{s.title}</h3>
                 <p style={{ fontSize: '14px', color: 'var(--fg2)', lineHeight: 1.65, marginBottom: '16px' }}>{s.desc}</p>
                 <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '7px', marginBottom: '20px' }}>
                   {s.pts.map((p, j) => (
-                    <li key={j} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'var(--fg2)' }}>
+                    <motion.li key={j} initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }} viewport={VIEWPORT}
+                      transition={{ delay: j * 0.06, type: 'spring', stiffness: 120 }}
+                      style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'var(--fg2)' }}>
                       <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: s.clr, flexShrink: 0 }} />{p}
-                    </li>
+                    </motion.li>
                   ))}
                 </ul>
-                <a href="tel:+77066060600" className="btn btn-g" style={{ width: '100%', justifyContent: 'center', fontSize: '13px', padding: '12px' }}>Получить консультацию ↗</a>
+                <motion.a href="tel:+77066060600" className="btn btn-g"
+                  style={{ width: '100%', justifyContent: 'center', fontSize: '13px', padding: '12px' }}
+                  whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>Получить консультацию ↗</motion.a>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )

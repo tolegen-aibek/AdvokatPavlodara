@@ -1,22 +1,7 @@
-import { useState, useEffect, useRef } from 'react'
-
-function useRev(thr = 0.12) {
-  const ref = useRef(null)
-  const [vis, setVis] = useState(false)
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const obs = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) { setVis(true); obs.disconnect() }
-    }, { threshold: thr })
-    obs.observe(el)
-    return () => obs.disconnect()
-  }, [])
-  return [ref, vis]
-}
+import { motion } from 'framer-motion'
+import { fadeUp, staggerContainer, VIEWPORT, floatAnim } from '../animations'
 
 export default function CtaSection() {
-  const [r, v] = useRev()
   return (
     <section style={{ padding: 'var(--sec-py) 32px', background: 'var(--g700)', position: 'relative', overflow: 'hidden' }}>
       <div style={{ position: 'absolute', inset: 0, opacity: .055 }}>
@@ -25,18 +10,29 @@ export default function CtaSection() {
           <rect width="100%" height="100%" fill="url(#g2)" />
         </svg>
       </div>
-      <div className="orb" style={{ width: '320px', height: '320px', background: '#2E6B40', top: '-80px', right: '-60px', opacity: .45 }} />
-      <div className="orb" style={{ width: '200px', height: '200px', background: '#9B8550', bottom: '-40px', left: '10%', opacity: .3 }} />
-      <div ref={r} className={`rev ${v ? 'vis' : ''}`} style={{ maxWidth: '700px', margin: '0 auto', textAlign: 'center', position: 'relative' }}>
-        <h2 className="serif" style={{ fontSize: 'clamp(28px,4vw,50px)', fontWeight: 700, color: 'white', marginBottom: '14px', lineHeight: 1.2 }}>
+      <motion.div className="orb" style={{ width: '320px', height: '320px', background: '#2E6B40', top: '-80px', right: '-60px', opacity: .45 }} {...floatAnim(0)} />
+      <motion.div className="orb" style={{ width: '200px', height: '200px', background: '#9B8550', bottom: '-40px', left: '10%', opacity: .3 }} {...floatAnim(2)} />
+
+      <motion.div variants={staggerContainer(0.12)} initial="hidden" whileInView="show" viewport={VIEWPORT}
+        style={{ maxWidth: '700px', margin: '0 auto', textAlign: 'center', position: 'relative' }}>
+        <motion.h2 variants={fadeUp} className="serif"
+          style={{ fontSize: 'clamp(28px,4vw,50px)', fontWeight: 700, color: 'white', marginBottom: '14px', lineHeight: 1.2 }}>
           Готовы решить<br /><span style={{ color: 'var(--gold-l)' }}>вашу проблему?</span>
-        </h2>
-        <p style={{ fontSize: '16px', color: 'rgba(255,255,255,.68)', marginBottom: '32px' }}>Первичная консультация бесплатна. Ежедневно с 9:00 до 20:00.</p>
-        <div className="cta-btns" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '12px' }}>
-          <a href="tel:+77066060600" className="btn btn-g" style={{ fontSize: '15px', padding: '15px 32px', boxShadow: '0 4px 20px rgba(155,133,80,.4)' }}>Связаться с юристом ↗</a>
-          <a href="https://wa.me/77066060600" className="btn btn-ghost" style={{ fontSize: '15px', padding: '14px 28px' }}>Написать в WhatsApp</a>
-        </div>
-      </div>
+        </motion.h2>
+        <motion.p variants={fadeUp} style={{ fontSize: '16px', color: 'rgba(255,255,255,.68)', marginBottom: '32px' }}>
+          Первичная консультация бесплатна. Ежедневно с 9:00 до 20:00.
+        </motion.p>
+        <motion.div variants={fadeUp} className="cta-btns" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '12px' }}>
+          <motion.a href="tel:+77066060600" className="btn btn-g"
+            style={{ fontSize: '15px', padding: '15px 32px', boxShadow: '0 4px 20px rgba(155,133,80,.4)' }}
+            whileHover={{ scale: 1.05, y: -3, boxShadow: '0 12px 36px rgba(155,133,80,.55)' }}
+            whileTap={{ scale: 0.97 }}>Связаться с юристом ↗</motion.a>
+          <motion.a href="https://wa.me/77066060600" className="btn btn-ghost"
+            style={{ fontSize: '15px', padding: '14px 28px' }}
+            whileHover={{ scale: 1.05, y: -3 }}
+            whileTap={{ scale: 0.97 }}>Написать в WhatsApp</motion.a>
+        </motion.div>
+      </motion.div>
     </section>
   )
 }

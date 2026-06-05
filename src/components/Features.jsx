@@ -1,19 +1,5 @@
-import { useState, useEffect, useRef } from 'react'
-
-function useRev(thr = 0.12) {
-  const ref = useRef(null)
-  const [vis, setVis] = useState(false)
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const obs = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) { setVis(true); obs.disconnect() }
-    }, { threshold: thr })
-    obs.observe(el)
-    return () => obs.disconnect()
-  }, [])
-  return [ref, vis]
-}
+import { motion } from 'framer-motion'
+import { fadeUp, fadeLeft, scaleUp, staggerContainer, VIEWPORT } from '../animations'
 
 const Badge = ({ c }) => (
   <span style={{ display: 'inline-block', padding: '6px 16px', borderRadius: '999px', fontSize: '12px', fontWeight: 600, letterSpacing: '.07em', textTransform: 'uppercase', color: 'var(--gold)', border: '1px solid rgba(155,133,80,.3)', background: 'rgba(155,133,80,.05)', marginBottom: '16px' }}>{c}</span>
@@ -29,25 +15,34 @@ const feats = [
 ]
 
 export default function Features() {
-  const [r, v] = useRev()
   return (
     <section id="about" style={{ padding: 'var(--sec-py) 0', background: 'var(--cr200)' }}>
-      <div ref={r} style={{ maxWidth: '1120px', margin: '0 auto', padding: '0 32px' }}>
-        <div className={`rev ${v ? 'vis' : ''}`} style={{ marginBottom: '52px' }}>
+      <div style={{ maxWidth: '1120px', margin: '0 auto', padding: '0 32px' }}>
+
+        <motion.div variants={fadeLeft} initial="hidden" whileInView="show" viewport={VIEWPORT}
+          style={{ marginBottom: '52px' }}>
           <Badge c="Почему я" />
           <h2 className="serif" style={{ fontSize: 'clamp(28px,3.5vw,44px)', fontWeight: 700, color: 'var(--g900)' }}>
             Что вы <span className="gtext">получаете</span>
           </h2>
-        </div>
-        <div className="g-3" style={{ gap: '20px' }}>
+        </motion.div>
+
+        <motion.div className="g-3" style={{ gap: '20px' }}
+          variants={staggerContainer(0.1)} initial="hidden" whileInView="show" viewport={VIEWPORT}>
           {feats.map((f, i) => (
-            <div key={i} className={`card rev td${(i % 3) + 1} ${v ? 'vis' : ''}`} style={{ padding: '26px' }}>
-              <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'var(--g700)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '20px', marginBottom: '14px' }}>{f.ic}</div>
+            <motion.div key={i} variants={scaleUp}
+              whileHover={{ y: -6, boxShadow: '0 20px 52px rgba(0,0,0,0.11)', transition: { type: 'spring', stiffness: 280, damping: 22 } }}
+              style={{ background: '#fff', padding: '26px', borderRadius: 'var(--card-r,20px)', border: '1px solid var(--bd)' }}>
+              <motion.div
+                style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'var(--g700)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '20px', marginBottom: '14px' }}
+                whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1, transition: { duration: 0.4 } }}>
+                {f.ic}
+              </motion.div>
               <h3 style={{ fontWeight: 600, fontSize: '15px', color: 'var(--g900)', marginBottom: '8px', lineHeight: 1.4 }}>{f.t}</h3>
               <p style={{ fontSize: '13px', color: 'var(--fg2)', lineHeight: 1.65 }}>{f.d}</p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )

@@ -50,13 +50,7 @@ body {
 .hi4 { animation: fadeUp .85s .50s cubic-bezier(.22,.68,0,1.1) forwards; opacity: 0; }
 .hi5 { animation: fadeUp .85s .62s cubic-bezier(.22,.68,0,1.1) forwards; opacity: 0; }
 
-.rev { opacity: 0; transform: translateY(36px); transition: opacity .75s cubic-bezier(.22,.68,0,1), transform .75s cubic-bezier(.22,.68,0,1); }
-.rev.vis { opacity: 1; transform: none; }
-.rev.td1 { transition-delay: .07s; }
-.rev.td2 { transition-delay: .17s; }
-.rev.td3 { transition-delay: .27s; }
-.rev.td4 { transition-delay: .37s; }
-.rev.td5 { transition-delay: .47s; }
+/* scroll-reveal handled by Framer Motion */
 
 .gtext {
   background: linear-gradient(130deg, var(--gold) 0%, var(--gold-l) 48%, var(--gold) 95%);
