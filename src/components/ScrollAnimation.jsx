@@ -3,13 +3,10 @@ import * as THREE from 'three'
 
 const BASE = import.meta.env.BASE_URL
 const TOTAL_FRAMES = 21
-const IMAGE_W = 1948
-const IMAGE_H = 1064
-const IMAGE_ASPECT = IMAGE_W / IMAGE_H // ~1.831
-const SECTION_HEIGHT = '560vh'
+const IMAGE_ASPECT = 1948 / 1064 // ~1.831
 
-function applyUVCover(texture, canvasW, canvasH) {
-  const screenAspect = canvasW / canvasH
+function applyUVCover(texture, w, h) {
+  const screenAspect = w / h
   if (screenAspect >= IMAGE_ASPECT) {
     const r = IMAGE_ASPECT / screenAspect
     texture.repeat.set(1, r)
@@ -25,70 +22,53 @@ export default function ScrollAnimation({ onEnter }) {
   const sectionRef = useRef(null)
   const canvasRef = useRef(null)
   const progressRef = useRef(null)
-  const stateRef = useRef({
-    renderer: null,
-    mesh: null,
-    scene: null,
-    camera: null,
-    textures: Array(TOTAL_FRAMES).fill(null),
-    currentFrame: -1,
-    loaded: 0,
-  })
 
   useEffect(() => {
     const section = sectionRef.current
     const canvas = canvasRef.current
-    const s = stateRef.current
 
+    /* ── Three.js setup ── */
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: 'high-performance' })
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-    s.renderer = renderer
 
     const scene = new THREE.Scene()
-    s.scene = scene
     const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1)
-    s.camera = camera
-
     const geometry = new THREE.PlaneGeometry(2, 2)
     const material = new THREE.MeshBasicMaterial({ color: 0x0a1a0e })
     const mesh = new THREE.Mesh(geometry, material)
     scene.add(mesh)
-    s.mesh = mesh
 
-    const render = () => renderer.render(scene, camera)
+    const doRender = () => renderer.render(scene, camera)
 
-    const onResize = () => {
-      const w = window.innerWidth
-      const h = window.innerHeight
+    const resize = () => {
+      const w = window.innerWidth, h = window.innerHeight
       renderer.setSize(w, h)
-      s.textures.forEach(t => t && applyUVCover(t, w, h))
-      render()
+      textures.forEach(t => t && applyUVCover(t, w, h))
+      doRender()
     }
 
+    /* ── Texture loading ── */
+    const textures = Array(TOTAL_FRAMES).fill(null)
     const loader = new THREE.TextureLoader()
     for (let i = 0; i < TOTAL_FRAMES; i++) {
       const num = String(i + 1).padStart(3, '0')
-      loader.load(
-        `${BASE}frames/ezgif-frame-${num}.jpg`,
-        (texture) => {
-          texture.colorSpace = THREE.SRGBColorSpace
-          applyUVCover(texture, window.innerWidth, window.innerHeight)
-          s.textures[i] = texture
-          s.loaded++
-          // Show first frame as soon as it arrives
-          if (i === 0) {
-            mesh.material = new THREE.MeshBasicMaterial({ map: texture })
-            render()
-          }
+      loader.load(`${BASE}frames/ezgif-frame-${num}.jpg`, (tex) => {
+        tex.colorSpace = THREE.SRGBColorSpace
+        applyUVCover(tex, window.innerWidth, window.innerHeight)
+        textures[i] = tex
+        if (i === 0) {
+          mesh.material = new THREE.MeshBasicMaterial({ map: tex })
+          doRender()
         }
-      )
+      })
     }
 
+    let shownFrame = -1
     const showFrame = (idx) => {
-      const i = Math.max(0, Math.min(TOTAL_FRAMES - 1, idx))
-      if (i === s.currentFrame) return
-      s.currentFrame = i
-      const tex = s.textures[i]
+      const i = Math.max(0, Math.min(TOTAL_FRAMES - 1, Math.round(idx)))
+      if (i === shownFrame) return
+      shownFrame = i
+      const tex = textures[i]
       if (!tex) return
       if (!mesh.material.map) {
         mesh.material = new THREE.MeshBasicMaterial({ map: tex })
@@ -96,38 +76,52 @@ export default function ScrollAnimation({ onEnter }) {
         mesh.material.map = tex
         mesh.material.needsUpdate = true
       }
-      render()
+      doRender()
+    }
+
+    /* ── RAF-based lerp for smooth easing ── */
+    let targetProgress = 0
+    let currentProgress = 0
+    let rafId = null
+
+    const tick = () => {
+      const diff = targetProgress - currentProgress
+      if (Math.abs(diff) < 0.0008) {
+        currentProgress = targetProgress
+        rafId = null
+        return
+      }
+      currentProgress += diff * 0.14
+      showFrame(currentProgress * (TOTAL_FRAMES - 1))
+      if (progressRef.current) {
+        progressRef.current.style.transform = `scaleX(${currentProgress})`
+      }
+      rafId = requestAnimationFrame(tick)
     }
 
     const onScroll = () => {
-      if (!section) return
       const top = section.getBoundingClientRect().top
-      const sectionH = section.offsetHeight
-      const vh = window.innerHeight
-      const scrolled = -top
-      const range = sectionH - vh
-      const progress = Math.max(0, Math.min(1, scrolled / range))
-      const frameIdx = Math.round(progress * (TOTAL_FRAMES - 1))
-      showFrame(frameIdx)
-      if (progressRef.current) {
-        progressRef.current.style.transform = `scaleX(${progress})`
-      }
+      const range = section.offsetHeight - window.innerHeight
+      targetProgress = Math.max(0, Math.min(1, -top / range))
+      if (!rafId) rafId = requestAnimationFrame(tick)
     }
 
+    /* ── IntersectionObserver for nav transparency ── */
     const observer = new IntersectionObserver(
-      ([entry]) => onEnter?.(entry.isIntersecting),
+      ([e]) => onEnter?.(e.isIntersecting),
       { threshold: 0 }
     )
     observer.observe(section)
 
     window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onResize, { passive: true })
-    onResize()
+    window.addEventListener('resize', resize, { passive: true })
+    resize()
     onScroll()
 
     return () => {
+      if (rafId) cancelAnimationFrame(rafId)
       window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onResize)
+      window.removeEventListener('resize', resize)
       observer.disconnect()
       renderer.dispose()
       geometry.dispose()
@@ -135,78 +129,63 @@ export default function ScrollAnimation({ onEnter }) {
   }, [])
 
   return (
-    <section ref={sectionRef} style={{ height: SECTION_HEIGHT, position: 'relative' }}>
+    <section ref={sectionRef} className="anim-section" style={{ position: 'relative' }}>
       <div style={{
         position: 'sticky', top: 0, height: '100vh', overflow: 'hidden',
-        background: 'linear-gradient(160deg, #060f08 0%, #0D2B1A 45%, #040c06 100%)',
+        background: 'linear-gradient(160deg,#060f08 0%,#0D2B1A 45%,#040c06 100%)',
       }}>
-        {/* Three.js canvas */}
-        <canvas ref={canvasRef} style={{
-          position: 'absolute', inset: 0, width: '100%', height: '100%', display: 'block'
-        }} />
+        <canvas ref={canvasRef} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', display: 'block' }} />
 
-        {/* Radial vignette */}
+        {/* Vignette */}
         <div style={{
           position: 'absolute', inset: 0, pointerEvents: 'none',
           background: 'radial-gradient(ellipse 90% 90% at 50% 50%, transparent 35%, rgba(4,12,6,.72) 100%)',
         }} />
 
         {/* Top-left label */}
-        <div style={{
+        <div className="anim-label" style={{
           position: 'absolute', top: '36px', left: '36px', pointerEvents: 'none',
           display: 'flex', alignItems: 'center', gap: '9px',
         }}>
-          <span style={{
-            width: '6px', height: '6px', borderRadius: '50%', background: 'var(--gold)',
-            display: 'inline-block', flexShrink: 0,
-          }} />
-          <span style={{
-            fontSize: '11px', fontWeight: 600, color: 'rgba(255,255,255,.45)',
-            letterSpacing: '.18em', textTransform: 'uppercase',
-          }}>Судебная практика</span>
+          <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--gold)', display: 'inline-block', flexShrink: 0 }} />
+          <span style={{ fontSize: '11px', fontWeight: 600, color: 'rgba(255,255,255,.45)', letterSpacing: '.18em', textTransform: 'uppercase' }}>
+            Судебная практика
+          </span>
         </div>
 
-        {/* Bottom center text */}
-        <div style={{
+        {/* Bottom text */}
+        <div className="anim-bottom" style={{
           position: 'absolute', bottom: '52px', left: 0, right: 0,
-          textAlign: 'center', pointerEvents: 'none',
+          textAlign: 'center', pointerEvents: 'none', padding: '0 20px',
         }}>
           <p style={{
             fontFamily: 'var(--heading-font,"Playfair Display"),Georgia,serif',
-            fontSize: 'clamp(16px,2.2vw,26px)', fontWeight: 700,
+            fontSize: 'clamp(15px,2.2vw,26px)', fontWeight: 700,
             color: 'rgba(255,255,255,.88)', letterSpacing: '-.01em', lineHeight: 1.3,
             textShadow: '0 2px 24px rgba(0,0,0,.6)',
           }}>
             Знание закона — наше оружие.
           </p>
-          <p style={{
-            marginTop: '8px', fontSize: '13px', color: 'rgba(255,255,255,.36)',
-            fontWeight: 500, letterSpacing: '.08em',
-          }}>
+          <p style={{ marginTop: '6px', fontSize: '13px', color: 'rgba(255,255,255,.36)', fontWeight: 500, letterSpacing: '.06em' }}>
             340+ выигранных дел в судах Павлодарской области
           </p>
         </div>
 
-        {/* Scroll hint — only visible near top of section */}
+        {/* Scroll hint */}
         <div className="anim-scroll-hint" style={{
           position: 'absolute', bottom: '52px', right: '36px', pointerEvents: 'none',
           display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px',
         }}>
           <span style={{ fontSize: '10px', fontWeight: 600, color: 'rgba(255,255,255,.28)', letterSpacing: '.14em', textTransform: 'uppercase' }}>scroll</span>
-          <div style={{ width: '1px', height: '32px', background: 'linear-gradient(to bottom, rgba(155,133,80,.6), transparent)' }} />
+          <div style={{ width: 1, height: 32, background: 'linear-gradient(to bottom,rgba(155,133,80,.6),transparent)' }} />
         </div>
 
         {/* Progress bar */}
-        <div style={{
-          position: 'absolute', bottom: 0, left: 0, right: 0, height: '2px',
-          background: 'rgba(255,255,255,.07)',
-        }}>
+        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 2, background: 'rgba(255,255,255,.07)' }}>
           <div ref={progressRef} style={{
             height: '100%',
-            background: 'linear-gradient(90deg, var(--gold), var(--gold-l))',
-            transformOrigin: 'left center',
-            transform: 'scaleX(0)',
-            transition: 'transform .08s linear',
+            background: 'linear-gradient(90deg,var(--gold),var(--gold-l))',
+            transformOrigin: 'left center', transform: 'scaleX(0)',
           }} />
         </div>
       </div>

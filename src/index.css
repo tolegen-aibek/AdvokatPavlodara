@@ -163,6 +163,16 @@ body {
 /* ─── Responsive container padding ─── */
 .s-pad { padding-left: 32px; padding-right: 32px; }
 
+/* ─── Scroll animation section ─── */
+.anim-section { height: 260vh; }
+
+@media (max-width: 760px) {
+  .anim-section { height: 200vh; }
+  .anim-label { top: 22px !important; left: 18px !important; }
+  .anim-bottom { bottom: 36px !important; }
+  .anim-scroll-hint { display: none !important; }
+}
+
 /* ─── Mobile Hero Redesign ─── */
 .hero-mob-photo { display: none; }
 
