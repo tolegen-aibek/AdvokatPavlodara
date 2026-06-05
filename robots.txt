@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tolegen-aibek.github.io/AdvokatPavlodara/sitemap.xml
