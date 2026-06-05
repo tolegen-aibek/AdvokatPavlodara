@@ -163,20 +163,94 @@ body {
 /* ─── Responsive container padding ─── */
 .s-pad { padding-left: 32px; padding-right: 32px; }
 
+/* ─── Mobile Hero Redesign ─── */
+.hero-mob-photo { display: none; }
+
 @media (max-width: 760px) {
-  :root { --sec-py: 64px; }
+  :root { --sec-py: 56px; }
   .s-pad { padding-left: 20px; padding-right: 20px; }
   .cta-section-pad { padding-left: 20px !important; padding-right: 20px !important; }
+
+  /* Hero: tighter top padding to just clear navbar */
+  .hero-section { padding-top: 70px !important; padding-bottom: 40px !important; }
+
+  /* Full-bleed photo card */
+  .hero-mob-photo {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    border-radius: 0 0 32px 32px;
+    margin-bottom: 28px;
+    box-shadow: 0 12px 44px rgba(13,43,26,.22);
+  }
+  .hero-mob-photo > img {
+    width: 100%;
+    height: 74vw;
+    min-height: 260px;
+    max-height: 390px;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+  .hero-mob-photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 38%, rgba(13,43,26,.58) 100%);
+    pointer-events: none;
+  }
+  .hero-mob-badge {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: rgba(13,43,26,.84);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(155,133,80,.42);
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,.92);
+    letter-spacing: .05em;
+  }
+  .hero-mob-badge-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+
+  /* Hide desktop right-col photo */
+  .hero-desktop-photo { display: none !important; }
+
+  /* Hide inline availability badge (replaced by photo badge) */
+  .hero-avail-text-badge { display: none !important; }
+
+  /* Full-width CTA buttons stacked */
+  .hero-cta-btns { flex-direction: column !important; gap: 10px !important; }
+  .hero-cta-btns a { justify-content: center !important; width: 100% !important; }
+
+  /* Stats row */
+  .hero-stats { margin-top: 24px !important; }
+  .stat-card { padding: 14px 10px !important; }
+  .stat-card .serif { font-size: 26px !important; }
+
+  /* Service images shorter */
+  .svc-img { height: 170px !important; }
+
+  /* Feature cards tighter */
+  .feat-card { padding: 20px !important; }
 }
 
 @media (max-width: 540px) {
   :root { --sec-py: 48px; }
   .s-pad { padding-left: 16px; padding-right: 16px; }
   .cta-section-pad { padding-left: 16px !important; padding-right: 16px !important; }
-  /* Hide floating badge cards and rings that overflow on small phones */
   .hero-deco { display: none !important; }
-  /* Tighter stats row on mobile */
-  .hero-stats { margin-top: 36px !important; }
-  /* Shrink hero title min size */
-  .hero-title-word { font-size: clamp(32px, 8.5vw, 64px) !important; }
+  .hero-title-word { font-size: clamp(30px, 8vw, 64px) !important; }
 }

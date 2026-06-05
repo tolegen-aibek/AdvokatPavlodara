@@ -18,7 +18,7 @@ export default function Hero({ heroLine1, ctaText, showOrbs, showBadges, doParal
   const photoY = useTransform(scrollYProgress, [0, 1], ['0%', doParallax ? '12%' : '0%'])
 
   return (
-    <section ref={ref} style={{ position: 'relative', minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', overflow: 'hidden', paddingTop: '104px', paddingBottom: '60px', background: 'linear-gradient(140deg,#FAF8F4 0%,var(--cr200) 45%,var(--cr300) 100%)' }}>
+    <section ref={ref} className="hero-section" style={{ position: 'relative', minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', overflow: 'hidden', paddingTop: '104px', paddingBottom: '60px', background: 'linear-gradient(140deg,#FAF8F4 0%,var(--cr200) 45%,var(--cr300) 100%)' }}>
 
       {/* Grid parallax */}
       <motion.div style={{ position: 'absolute', inset: 0, opacity: .034, pointerEvents: 'none', y: gridY }}>
@@ -37,13 +37,22 @@ export default function Hero({ heroLine1, ctaText, showOrbs, showBadges, doParal
         </>
       )}
 
+      {/* Mobile-only full-bleed photo (hidden on desktop via CSS) */}
+      <div className="hero-mob-photo">
+        <img src={`${BASE}uploads/lawyer_photo-1780568895176.png`} alt="Юрист Алия Сейткали" />
+        <div className="hero-mob-badge">
+          <span className="hero-mob-badge-dot" />
+          Павлодар · Консультация бесплатно
+        </div>
+      </div>
+
       <div className="s-pad" style={{ position: 'relative', maxWidth: '1120px', margin: '0 auto', width: '100%' }}>
         <div className="g-hero">
 
           {/* Left col */}
           <motion.div variants={staggerContainer(0.12, 0)} initial="hidden" animate="show">
 
-            <motion.div variants={fadeUp} style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '7px 16px', borderRadius: '999px', background: 'rgba(155,133,80,.08)', border: '1px solid rgba(155,133,80,.22)', marginBottom: '22px' }}>
+            <motion.div className="hero-avail-text-badge" variants={fadeUp} style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '7px 16px', borderRadius: '999px', background: 'rgba(155,133,80,.08)', border: '1px solid rgba(155,133,80,.22)', marginBottom: '22px' }}>
               <motion.span style={{ width: '7px', height: '7px', borderRadius: '50%', background: 'var(--gold)', display: 'inline-block' }} {...pulseAnim} />
               <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--gold)', letterSpacing: '.07em', textTransform: 'uppercase' }}>Павлодар · Консультация бесплатно</span>
             </motion.div>
@@ -64,7 +73,7 @@ export default function Hero({ heroLine1, ctaText, showOrbs, showBadges, doParal
               Помогу разобраться с кредитными долгами, семейными спорами и трудовыми конфликтами. Личный подход — каждое дело веду сам.
             </motion.p>
 
-            <motion.div variants={fadeUp} style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', marginBottom: '36px' }}>
+            <motion.div className="hero-cta-btns" variants={fadeUp} style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', marginBottom: '36px' }}>
               <motion.a href="tel:+77066060600" className="btn btn-g" style={{ fontSize: '15px', padding: '15px 32px' }} whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.97 }}>{ctaText} ↗</motion.a>
               <motion.a href="#services" className="btn btn-o" style={{ fontSize: '15px', padding: '14px 28px' }} whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.97 }}>Наши услуги</motion.a>
             </motion.div>
@@ -86,8 +95,8 @@ export default function Hero({ heroLine1, ctaText, showOrbs, showBadges, doParal
             </motion.div>
           </motion.div>
 
-          {/* Right col — photo */}
-          <motion.div style={{ display: 'flex', justifyContent: 'center', position: 'relative' }}
+          {/* Right col — photo (hidden on mobile via CSS) */}
+          <motion.div className="hero-desktop-photo" style={{ display: 'flex', justifyContent: 'center', position: 'relative' }}
             initial={{ opacity: 0, x: 60 }} animate={{ opacity: 1, x: 0 }}
             transition={{ type: 'spring', stiffness: 60, damping: 18, delay: 0.3 }}>
             <motion.div style={{ position: 'relative' }} style2={{ y: photoY }}>
@@ -129,7 +138,7 @@ export default function Hero({ heroLine1, ctaText, showOrbs, showBadges, doParal
           variants={staggerContainer(0.08, 0.1)} initial="hidden" animate="show">
           {stats.map((s, i) => (
             <motion.div key={i} variants={scaleUp} whileHover={{ y: -4, transition: { type: 'spring', stiffness: 300 } }}
-              style={{ background: 'rgba(255,255,255,.72)', border: '1px solid var(--bd)', borderRadius: '16px', padding: '22px', textAlign: 'center', backdropFilter: 'blur(8px)' }}>
+              className="stat-card" style={{ background: 'rgba(255,255,255,.72)', border: '1px solid var(--bd)', borderRadius: '16px', padding: '22px', textAlign: 'center', backdropFilter: 'blur(8px)' }}>
               <p className="serif" style={{ fontSize: '34px', fontWeight: 700, color: 'var(--g900)', lineHeight: 1 }}>{s.n}</p>
               <p style={{ fontSize: '13px', color: 'var(--fg3)', marginTop: '5px' }}>{s.l}</p>
             </motion.div>

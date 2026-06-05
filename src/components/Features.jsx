@@ -32,7 +32,7 @@ export default function Features() {
           {feats.map((f, i) => (
             <motion.div key={i} variants={scaleUp}
               whileHover={{ y: -6, boxShadow: '0 20px 52px rgba(0,0,0,0.11)', transition: { type: 'spring', stiffness: 280, damping: 22 } }}
-              style={{ background: '#fff', padding: '26px', borderRadius: 'var(--card-r,20px)', border: '1px solid var(--bd)' }}>
+              className="feat-card" style={{ background: '#fff', padding: '26px', borderRadius: 'var(--card-r,20px)', border: '1px solid var(--bd)' }}>
               <motion.div
                 style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'var(--g700)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '20px', marginBottom: '14px' }}
                 whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1, transition: { duration: 0.4 } }}>
