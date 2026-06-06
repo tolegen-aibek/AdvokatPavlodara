@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { staggerContainer, heroWord, fadeUp, scaleUp, pulseAnim, floatAnim } from '../animations'
+import BorderGlow from './BorderGlow'
 
 const BASE = import.meta.env.BASE_URL
 
@@ -74,8 +75,16 @@ export default function Hero({ heroLine1, ctaText, showOrbs, showBadges, doParal
             </motion.p>
 
             <motion.div className="hero-cta-btns" variants={fadeUp} style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', marginBottom: '36px' }}>
-              <motion.a href="tel:+77066060600" className="btn btn-g" style={{ fontSize: '15px', padding: '15px 32px' }} whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.97 }}>{ctaText} ↗</motion.a>
-              <motion.a href="#services" className="btn btn-o" style={{ fontSize: '15px', padding: '14px 28px' }} whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.97 }}>Наши услуги</motion.a>
+              <BorderGlow className="btn-glow" borderRadius={999} backgroundColor="transparent"
+                glowColor="41 55 65" colors={['#C4AD7A','#9B8550','#E8C86A']}
+                glowRadius={20} glowIntensity={1.4} coneSpread={22} edgeSensitivity={10}>
+                <motion.a href="tel:+77066060600" className="btn btn-g" style={{ fontSize: '15px', padding: '15px 32px' }} whileTap={{ scale: 0.97 }}>{ctaText} ↗</motion.a>
+              </BorderGlow>
+              <BorderGlow className="btn-glow" borderRadius={999} backgroundColor="transparent"
+                glowColor="41 45 55" colors={['#9B8550','#C4AD7A','#7D6840']}
+                glowRadius={20} glowIntensity={1.2} coneSpread={22} edgeSensitivity={10}>
+                <motion.a href="#services" className="btn btn-o" style={{ fontSize: '15px', padding: '14px 28px' }} whileTap={{ scale: 0.97 }}>Наши услуги</motion.a>
+              </BorderGlow>
             </motion.div>
 
             <motion.div variants={fadeUp} style={{ display: 'flex', alignItems: 'center', gap: '16px', paddingTop: '24px', borderTop: '1px solid var(--bd)' }}>

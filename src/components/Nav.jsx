@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import BorderGlow from './BorderGlow'
 
 const links = [
   ['Услуги', '#services'],
@@ -65,11 +66,16 @@ export default function Nav({ transparent }) {
           ))}
         </div>
 
-        <a href="tel:+77066060600"
-          className={`btn md-hide ${transparent ? 'btn-ghost' : 'btn-g'}`}
-          style={{ padding: '10px 20px', fontSize: '13px', transition: 'all .35s' }}>
-          Связаться ↗
-        </a>
+        <BorderGlow className="btn-glow md-hide" borderRadius={999} backgroundColor="transparent"
+          glowColor={transparent ? '0 0 95' : '41 55 65'}
+          colors={transparent ? ['#ffffff','#dddddd','#ffffff'] : ['#C4AD7A','#9B8550','#E8C86A']}
+          glowRadius={16} glowIntensity={1.3} coneSpread={20} edgeSensitivity={10}>
+          <a href="tel:+77066060600"
+            className={`btn ${transparent ? 'btn-ghost' : 'btn-g'}`}
+            style={{ padding: '10px 20px', fontSize: '13px' }}>
+            Связаться ↗
+          </a>
+        </BorderGlow>
 
         <button className="md-show" onClick={() => setMo(!mo)}
           style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px', flexDirection: 'column', gap: '5px' }}>

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { fadeUp, staggerContainer, VIEWPORT, floatAnim } from '../animations'
+import BorderGlow from './BorderGlow'
 
 export default function CtaSection() {
   return (
@@ -23,14 +24,20 @@ export default function CtaSection() {
           Первичная консультация бесплатна. Ежедневно с 9:00 до 20:00.
         </motion.p>
         <motion.div variants={fadeUp} className="cta-btns" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '12px' }}>
-          <motion.a href="tel:+77066060600" className="btn btn-g"
-            style={{ fontSize: '15px', padding: '15px 32px', boxShadow: '0 4px 20px rgba(155,133,80,.4)' }}
-            whileHover={{ scale: 1.05, y: -3, boxShadow: '0 12px 36px rgba(155,133,80,.55)' }}
-            whileTap={{ scale: 0.97 }}>Связаться с юристом ↗</motion.a>
-          <motion.a href="https://wa.me/77066060600" className="btn btn-ghost"
-            style={{ fontSize: '15px', padding: '14px 28px' }}
-            whileHover={{ scale: 1.05, y: -3 }}
-            whileTap={{ scale: 0.97 }}>Написать в WhatsApp</motion.a>
+          <BorderGlow className="btn-glow" borderRadius={999} backgroundColor="transparent"
+            glowColor="41 55 65" colors={['#C4AD7A','#9B8550','#E8C86A']}
+            glowRadius={20} glowIntensity={1.4} coneSpread={22} edgeSensitivity={10}>
+            <motion.a href="tel:+77066060600" className="btn btn-g"
+              style={{ fontSize: '15px', padding: '15px 32px' }}
+              whileTap={{ scale: 0.97 }}>Связаться с юристом ↗</motion.a>
+          </BorderGlow>
+          <BorderGlow className="btn-glow" borderRadius={999} backgroundColor="transparent"
+            glowColor="0 0 95" colors={['#ffffff','#dddddd','#ffffff']}
+            glowRadius={20} glowIntensity={1.1} coneSpread={22} edgeSensitivity={10}>
+            <motion.a href="https://wa.me/77066060600" className="btn btn-ghost"
+              style={{ fontSize: '15px', padding: '14px 28px' }}
+              whileTap={{ scale: 0.97 }}>Написать в WhatsApp</motion.a>
+          </BorderGlow>
         </motion.div>
       </motion.div>
     </section>

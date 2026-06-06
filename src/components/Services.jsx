@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { fadeUp, scaleUp, staggerContainer, VIEWPORT } from '../animations'
+import BorderGlow from './BorderGlow'
 
 const BASE = import.meta.env.BASE_URL
 
@@ -66,9 +67,14 @@ export default function Services() {
                     </motion.li>
                   ))}
                 </ul>
-                <motion.a href="tel:+77066060600" className="btn btn-g"
-                  style={{ width: '100%', justifyContent: 'center', fontSize: '13px', padding: '12px' }}
-                  whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>Получить консультацию ↗</motion.a>
+                <BorderGlow className="btn-glow" borderRadius={999} backgroundColor="transparent"
+                  glowColor="41 55 65" colors={['#C4AD7A','#9B8550','#E8C86A']}
+                  glowRadius={18} glowIntensity={1.3} coneSpread={22} edgeSensitivity={10}
+                  style={{ width: '100%' }}>
+                  <motion.a href="tel:+77066060600" className="btn btn-g"
+                    style={{ width: '100%', justifyContent: 'center', fontSize: '13px', padding: '12px' }}
+                    whileTap={{ scale: 0.97 }}>Получить консультацию ↗</motion.a>
+                </BorderGlow>
               </div>
             </motion.div>
           ))}
